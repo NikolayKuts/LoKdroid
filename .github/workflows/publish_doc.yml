@@ -39,7 +39,7 @@ jobs:
         run: |
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git config --global user.name "${{ github.actor }}"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/NikolayGini/GiniLogger.git
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/NikolayKuts/LoKdroid.git
           git checkout --orphan gh-pages
           git rm -rf .
           cp -r ${{ github.workspace }}/library/build/dokka/html/* .
