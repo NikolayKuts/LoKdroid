@@ -26,9 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-#      - name: Publish to Maven Local
-#        run: ./gradlew publishToMavenLocal
-
       - name: Create documentation file
         run: ./gradlew dokkaHtml
 
@@ -39,7 +36,6 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/NikolayKuts/LoKdroid.git
           git checkout --orphan gh-pages
           git rm -rf .
-          cp -r ${{ github.workspace }}/library/build/dokka/html/* .
-          git add .
+          git add ${{ github.workspace }}/library/build/dokka/html
           git commit -m "Publish documentation"
           git push origin gh-pages --force
