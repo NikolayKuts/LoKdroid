@@ -29,11 +29,23 @@ jobs:
       - name: Create documentation file
         run: ./gradlew dokkaHtml
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .library/build/dokka/html  # Путь к директории с сгенерированной документацией
+#      - name: Deploy to GitHub Pages
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_dir: .library/build/dokka/html  # Путь к директории с сгенерированной документацией
+
+      - name: Publish Docs
+        run: |
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/NikolayKuts/LoKdroid.git
+          git checkout --orphan gh-pages
+          git rm -rf .
+          cp -r ${{ github.workspace }}/library/build/dokka/html/* .
+          git add .
+          git commit -m "Publish documentation"
+          git push origin gh-pages --force
 
 #      - name: Publish Docs
 #        run: |
