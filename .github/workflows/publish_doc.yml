@@ -39,3 +39,4 @@ jobs:
           git add ${{ github.workspace }}/library/build/dokka/html
           git commit -m "Publish documentation"
           git push origin gh-pages --force
+          
