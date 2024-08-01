@@ -1,8 +1,12 @@
 package com.lib.lokdroid.data.default_implementation.logger
 
+import android.content.Context
 import com.lib.lokdroid.data.default_implementation.formatDate
 import com.lib.lokdroid.data.default_implementation.logger.FileLogger.Companion.DEFAULT_FILE_NAME
+import com.lib.lokdroid.data.default_implementation.logger.logcat.LogcatLogger
+import com.lib.lokdroid.data.default_implementation.logger.txt.TxtLogger
 import com.lib.lokdroid.domain.Logger
+import com.lib.lokdroid.domain.model.FileFormat
 import com.lib.lokdroid.domain.model.Level
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,21 +14,25 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.io.BufferedWriter
 import java.io.File
-import java.io.FileWriter
 import java.io.IOException
 
 /**
- * A file-based logger that writes log messages to a specified file in an asynchronous manner.
- * This logger appends each log entry to the end of the file, formatting each entry with a timestamp,
- * log level, and tag.
+ * A file-based logger that writes log messages to a specified file asynchronously.
+ * This logger supports different file format.
+ * Each entry is formatted with a timestamp, log level, and tag.
  *
+ * @param context The context used to access the file directory and creating [LogcatLogger] instance.
  * @param filePath The directory path where the log file will be created or exists.
  * @param fileName The name of the file to write logs to. Defaults to [DEFAULT_FILE_NAME].
+ * @param format The format in which logs will be written. Defaults to [FileFormat.Logcat].
  */
-
-class FileLogger(filePath: String, fileName: String = DEFAULT_FILE_NAME) : Logger {
+class FileLogger(
+    context: Context,
+    filePath: String = context.filesDir.path,
+    fileName: String = DEFAULT_FILE_NAME,
+    private val format: FileFormat = FileFormat.Logcat
+) : Logger {
 
     companion object {
 
@@ -34,11 +42,24 @@ class FileLogger(filePath: String, fileName: String = DEFAULT_FILE_NAME) : Logge
 
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private val mutex: Mutex = Mutex()
-    private val file = File(buildFileName(filePath = filePath, fileName = fileName))
+    private val builtFileName = buildFileName(
+        filePath = filePath,
+        fileName = fileName,
+        fileFormat = format
+    )
+    private val file = File(builtFileName)
+    private val txtLogger = TxtLogger(logFile = file)
+    private val logcatLogger = LogcatLogger(logFile = file, context = context)
+
+    init {
+        createFileIfNeeded(file = file)
+    }
 
     /**
-     * Logs a message with the specified level, tag, and content by writing it to a log file.
-     * The operation is performed asynchronously to avoid blocking the caller's thread.
+     * Logs a message with the specified [level], [tag], and [message] by writing it to a log file.
+     * The actual logging operation is delegated to a specific logger implementation based on the
+     * [format] specified for this `FileLogger`. The logging operation is performed asynchronously
+     * to avoid blocking the caller's thread.
      *
      * @param level The severity level of the log message.
      * @param tag The tag associated with the log message.
@@ -50,56 +71,37 @@ class FileLogger(filePath: String, fileName: String = DEFAULT_FILE_NAME) : Logge
         tag: String,
         message: String,
     ) {
-        logToFile(level = level, tag = tag, message = message)
-    }
-
-    /**
-     * Logs a message to a file asynchronously, ensuring that the logging process does not block the main thread.
-     * This method formats the message, attaches a timestamp and the log level, and writes to the log file, ensuring thread safety with a mutex.
-     *
-     * @param level The severity level of the log.
-     * @param tag A string label used to identify the source of the log.
-     * @param message The actual log message to be written to the file.
-     */
-
-    private fun logToFile(level: Level, tag: String, message: String) {
+        val logger = when (format) {
+            FileFormat.Txt -> txtLogger
+            FileFormat.Logcat -> logcatLogger
+        }
         scope.launch {
-            createFileIfNeeded(file = file)
-
-            try {
-                val date = formatDate(timestamp = System.currentTimeMillis())
-                val fullMessage = "$date $level $tag $message"
-                val bufferWriter = BufferedWriter(FileWriter(file, true))
-
-                mutex.withLock {
-                    bufferWriter.use { buf ->
-                        buf.append(fullMessage)
-                        buf.newLine()
-                        buf.close()
-                    }
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
+            mutex.withLock {
+                logger.log(level = level, tag = tag, message = message)
             }
         }
     }
 
     /**
-     * Constructs a file name based on the provided path and the current date and time.
+     * Constructs a file name based on the provided path, base name, and the current date and time.
      * This method ensures that each log file is uniquely identified by its timestamp.
      *
      * @param filePath The path where the log file will be stored.
      * @param fileName The base name for the log file, which will be appended with a timestamp.
+     * @param fileFormat The format in which logs will be written.
      * @return The fully constructed file name.
      */
-
-    private fun buildFileName(filePath: String, fileName: String): String {
+    private fun buildFileName(
+        filePath: String,
+        fileName: String,
+        fileFormat: FileFormat
+    ): String {
         val date = formatDate(
             timestamp = System.currentTimeMillis(),
             pattern = FILE_NAME_DATE_PATTERN
         )
 
-        return "$filePath/${fileName}_$date.txt"
+        return "$filePath/${fileName}_$date.${fileFormat.value}"
     }
 
     /**

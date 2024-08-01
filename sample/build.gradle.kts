@@ -1,15 +1,14 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-//    alias(libs.plugins.mavenPublish)
 }
 
 android {
-    namespace = "com.lib.lokroid"
+    namespace = "com.lib.lokdroid"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.lib.lokroid"
+        applicationId = "com.lib.lokdroid"
         minSdk = 25
         targetSdk = 34
         versionCode = 1
@@ -35,7 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = libs.versions.jvmTarget.get()
     }
     buildFeatures {
         compose = true
@@ -67,7 +66,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    debugImplementation(libs.jakewharton.timber)
     implementation(project(":library"))
 
 //    implementation(libs.lokdroid.core)

@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.lokdroid.custom.plugin")
-    id("org.jetbrains.dokka") version "1.9.20"
+    id("org.jetbrains.dokka") version libs.versions.dokka.get()
+    kotlin("plugin.serialization") version libs.versions.kotlin.get()
 }
 
 android {
@@ -33,18 +34,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = libs.versions.jvmTarget.get()
     }
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 tasks.dokkaHtml.configure {
