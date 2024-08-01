@@ -5,15 +5,15 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
+kotlinxSerializationJson = "1.6.3"
 ktor = "2.3.10"
 lifecycleRuntimeKtx = "2.8.3"
 activityCompose = "1.9.0"
 composeBom = "2024.06.00"
-kotlinCompilerExtension = "1.5.9"
-timber = "5.0.1"
-appcompat = "1.7.0"
-material = "1.12.0"
 lokdroid = "0.0.1"
+kotlinCompilerExtension = "1.5.9"
+dokka = "1.9.20"
+jvmTarget = "1.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,12 +30,10 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-jakewharton-timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+lokdroid-core = { group = "com.lokdroid", name = "core", version.ref = "lokdroid" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

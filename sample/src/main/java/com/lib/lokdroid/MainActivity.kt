@@ -14,11 +14,12 @@ import com.lib.lokdroid.core.logE
 import com.lib.lokdroid.core.logI
 import com.lib.lokdroid.core.logV
 import com.lib.lokdroid.core.logW
+import com.lib.lokdroid.data.default_implementation.logger.ConsoleAndFileLogger
+import com.lib.lokdroid.data.default_implementation.logger.FileLogger
 import com.lib.lokdroid.data.default_implementation.logger.RemoteLogger
 import com.lib.lokdroid.domain.LogBuilder
 import com.lib.lokdroid.domain.model.Level
 import com.lib.lokdroid.ui.theme.LoKdroidTheme
-import timber.log.Timber
 
 
 class MainActivity : ComponentActivity() {
@@ -35,13 +36,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Timber.plant(Timber.DebugTree())
-
         LoKdroid.initialize(
             /** uncomment this to check logging to file */
-//            logger = FileLogger(filePath = filesDir.path)
+//            logger = FileLogger(context = application)
             /** uncomment this to check logging to file and console */
-//            logger = ConsoleAndFileLogger(fileLogger = FileLogger(filePath = filesDir.path))
+//            logger = ConsoleAndFileLogger(fileLogger = FileLogger(context = application))
             /** uncomment this to check logging to remote */
 //            logger = RemoteLogger.getInstance(url = "https://echo.free.beeceptor.com")
         )
