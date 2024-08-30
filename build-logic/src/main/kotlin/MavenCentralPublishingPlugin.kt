@@ -35,7 +35,7 @@ class MavenCentralPublishingPlugin : Plugin<Project> {
                 val library = getLibsLibrary(alias = LOKDROID_LIBRARY_ALIAS)
 
                 library.run {
-                    println("retrieved libsLibrary { groupId: $groupId, artifactId: $artifactId, version: $version")
+                    println("retrieved libsLibrary { groupId: $groupId, artifactId: $artifactId, version: $version }")
                 }
 
                 coordinates(
