@@ -8,7 +8,7 @@ package com.lib.lokdroid.data.default_implementation
  * when a specific tag is not manually provided.
  */
 
-object DefaultTag {
+object DefaultTagProvider {
 
     /**
      * Retrieves the class name from the call stack as a logging tag.
@@ -20,10 +20,9 @@ object DefaultTag {
      * @return The class name of the logger's caller or "UnknownClass" if it cannot be resolved.
      */
 
-    val value: String
-        get() = Throwable().stackTrace[5]
-            ?.className
-            ?.replace("\\$\\d".toRegex(), "")
-            ?.substringAfterLast('.')
-            ?: "UnknownClass"
+    fun getTag(): String = Thread.currentThread().stackTrace[9]
+        ?.fileName
+        ?.removeSuffix(".kt")
+        ?.removeSuffix(".java")
+        ?: "UnknownClass"
 }

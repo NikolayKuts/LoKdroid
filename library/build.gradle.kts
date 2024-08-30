@@ -1,16 +1,14 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-import org.jetbrains.dokka.DokkaConfiguration
-
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.lokdroid.custom.plugin")
-    id("org.jetbrains.dokka") version libs.versions.dokka.get()
-    kotlin("plugin.serialization") version libs.versions.kotlin.get()
+    alias(libs.plugins.kotlinSerialization)
+
+    id("lokdroid-documentation-publishing")
+    id("lokdroid-maven-central-publishing")
 }
 
 android {
-    namespace = "com.lib.lokdroid"
+    namespace = "com.library.lokdroid"
     compileSdk = 34
 
     defaultConfig {
@@ -46,23 +44,3 @@ dependencies {
     implementation(libs.ktor.client.okhttp)
     implementation(libs.kotlinx.serialization.json)
 }
-
-tasks.dokkaHtml.configure {
-//    outputDirectory.set(file("docs"))
-
-    dokkaSourceSets {
-        configureEach {
-            documentedVisibilities.set(
-                setOf(
-                    DokkaConfiguration.Visibility.PUBLIC,
-                    DokkaConfiguration.Visibility.PROTECTED,
-                    DokkaConfiguration.Visibility.INTERNAL,
-                    DokkaConfiguration.Visibility.PACKAGE,
-                    DokkaConfiguration.Visibility.PRIVATE
-                )
-            )
-        }
-    }
-}
-
-tasks.publishToMavenLocal.dependsOn("dokkaHtml")

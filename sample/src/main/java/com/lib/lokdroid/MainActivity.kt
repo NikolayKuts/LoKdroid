@@ -7,18 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.lib.lokdroid.core.LoKdroid
-import com.lib.lokdroid.core.log
-import com.lib.lokdroid.core.logD
-import com.lib.lokdroid.core.logE
-import com.lib.lokdroid.core.logI
-import com.lib.lokdroid.core.logV
-import com.lib.lokdroid.core.logW
-import com.lib.lokdroid.data.default_implementation.logger.ConsoleAndFileLogger
-import com.lib.lokdroid.data.default_implementation.logger.FileLogger
-import com.lib.lokdroid.data.default_implementation.logger.RemoteLogger
-import com.lib.lokdroid.domain.LogBuilder
-import com.lib.lokdroid.domain.model.Level
+import com.lib.lokdroid.navigation.AppNavGraph
+import com.lib.lokdroid.navigation.Screen
 import com.lib.lokdroid.ui.theme.LoKdroidTheme
 
 
@@ -50,7 +42,7 @@ class MainActivity : ComponentActivity() {
 //            minLevel = Level.Debug,
 //            logger = { level: Level, tag: String, message: String -> /** your logic */ },
 //            formatter = { message -> "return formatted message: $message" },
-//            tag = "custom tag",
+//            tagProvider = { "custom tag" },
 //            logBuilderProvider = {
 //                /** provide your custom LogBuilder */
 //                object : LogBuilder {
@@ -72,29 +64,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    MainScreen(
-                        data = data,
-                        onVerboseClick = { logV(message = it) },
-                        onDebugClick = { logD(message = it) },
-                        onInfoClick = { logI(message = it) },
-                        onWarnClick = { logW(message = it) },
-                        onErrorClick = { logE(message = it) },
-                        onMultipleVerboseLogClick = { invokeMultipleLog(level = Level.Verbose) },
-                        onMultipleDebugLogClick = { invokeMultipleLog(level = Level.Debug) },
-                        onMultipleInfoLogClick = { invokeMultipleLog(level = Level.Info) },
-                        onMultipleWarnLogClick = { invokeMultipleLog(level = Level.Warn) },
-                        onMultipleErrorLogClick = { invokeMultipleLog(level = Level.Error) },
+                    val navHostController = rememberNavController()
+                    AppNavGraph(
+                        navHostController = navHostController,
+                        singleLogDemonstration = {
+                            SingleLoggingScreen(
+                                data = data,
+                                toMultipleLoggingScreen = {
+                                    navHostController.navigate(Screen.MultipleLogging())
+                                }
+                            )
+                        },
+                        multipleLogDemonstration = {
+                            MultipleLoggingScreen(data = data)
+                        }
                     )
+
                 }
             }
-        }
-    }
-
-    private fun invokeMultipleLog(level: Level) {
-        log(level = level) {
-            message("Multiple log")
-            data.forEach { message(value = it) }
         }
     }
 }

@@ -18,8 +18,6 @@ local.properties
 
 # Ignore build files in buildSrc directory
 /buildSrc/build/
+/build-logic/build/
 
-buildSrc/build/kotlin/buildSrcjar-classes.txt
-buildSrc/build/libs/buildSrc.jar
-buildSrc/build/pluginUnderTestMetadata/plugin-under-test-metadata.properties
-buildSrc/build/tmp/jar/MANIFEST.MF
+gradle.properties
