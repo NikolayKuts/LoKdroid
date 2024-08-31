@@ -20,7 +20,7 @@ object DefaultTagProvider {
      * @return The class name of the logger's caller or "UnknownClass" if it cannot be resolved.
      */
 
-    fun getTag(): String = Thread.currentThread().stackTrace[9]
+    fun getTag(): String = Thread.currentThread().stackTrace[8]
         ?.fileName
         ?.removeSuffix(".kt")
         ?.removeSuffix(".java")

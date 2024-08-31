@@ -68,6 +68,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.navigation.compose)
 
-//    implementation(project(":library"))
-    implementation(libs.lokdroid)
+    implementation(project(":library"))
+//    implementation(libs.lokdroid)
 }
