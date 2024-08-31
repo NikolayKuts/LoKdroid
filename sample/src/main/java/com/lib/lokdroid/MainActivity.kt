@@ -9,6 +9,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.lib.lokdroid.core.LoKdroid
+import com.lib.lokdroid.core.logD
+import com.lib.lokdroid.core.logE
+import com.lib.lokdroid.core.logI
+import com.lib.lokdroid.core.logV
+import com.lib.lokdroid.core.logW
+import com.lib.lokdroid.data.default_implementation.logger.ConsoleAndFileLogger
+import com.lib.lokdroid.data.default_implementation.logger.FileLogger
+import com.lib.lokdroid.data.default_implementation.logger.RemoteLogger
+import com.lib.lokdroid.domain.LogBuilder
+import com.lib.lokdroid.domain.model.Level
 import com.lib.lokdroid.navigation.AppNavGraph
 import com.lib.lokdroid.navigation.Screen
 import com.lib.lokdroid.ui.theme.LoKdroidTheme
@@ -36,6 +46,8 @@ class MainActivity : ComponentActivity() {
             /** uncomment this to check logging to remote */
 //            logger = RemoteLogger.getInstance(url = "https://echo.free.beeceptor.com")
         )
+
+        logI(message = "some message")
 
         /** custom implementation */
 //        LoKdroid.initialize(
