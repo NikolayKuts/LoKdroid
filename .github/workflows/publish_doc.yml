@@ -7,6 +7,8 @@ on:
     types:
       - closed
 
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -22,6 +24,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Create gradle.properties file
+        run: echo "${{ secrets.GRADLE_PROPERTIES_CONTENT }}" > gradle.properties
+
+      - name: Create lokdroid_secring.gpg file
+        run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | gpg --dearmor > lokdroid_secring.gpg
+
+      - name: Display project directory contents
+        run: ls -la
 
       - name: Create documentation file
         run: ./gradlew dokkaHtml
