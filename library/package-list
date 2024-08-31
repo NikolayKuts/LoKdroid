@@ -14,14 +14,14 @@ $dokka.location:com.lib.lokdroid.core//logV/#kotlin.Function1[com.lib.lokdroid.d
 $dokka.location:com.lib.lokdroid.core//logW/#kotlin.Any/PointingToDeclaration/library/com.lib.lokdroid.core/log-w.html
 $dokka.location:com.lib.lokdroid.core//logW/#kotlin.Function1[com.lib.lokdroid.domain.LogBuilder,kotlin.Unit]/PointingToDeclaration/library/com.lib.lokdroid.core/log-w.html
 $dokka.location:com.lib.lokdroid.core/LoKdroid///PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/index.html
-$dokka.location:com.lib.lokdroid.core/LoKdroid/initialize/#com.lib.lokdroid.domain.model.Level#com.lib.lokdroid.domain.Logger#com.lib.lokdroid.domain.Formatter#kotlin.String#com.lib.lokdroid.domain.LogBuilderProvider/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/initialize.html
+$dokka.location:com.lib.lokdroid.core/LoKdroid/initialize/#com.lib.lokdroid.domain.model.Level#com.lib.lokdroid.domain.Logger#com.lib.lokdroid.domain.Formatter#kotlin.Function0[kotlin.String]#com.lib.lokdroid.domain.LogBuilderProvider/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/initialize.html
 $dokka.location:com.lib.lokdroid.core/LoKdroid/log/#com.lib.lokdroid.domain.model.Level#kotlin.Function1[com.lib.lokdroid.domain.LogBuilder,kotlin.Unit]/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/log.html
 $dokka.location:com.lib.lokdroid.core/LoKdroid/log/#com.lib.lokdroid.domain.model.Level#kotlin.String/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/log.html
 $dokka.location:com.lib.lokdroid.core/LoKdroid/logManager/#/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/log-manager.html
 $dokka.location:com.lib.lokdroid.core/LoKdroid/minLevel/#/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/min-level.html
 $dokka.location:com.lib.lokdroid.core/LoKdroid/nonNullableLogManager/#/PointingToDeclaration/library/com.lib.lokdroid.core/-lo-kdroid/non-nullable-log-manager.html
 $dokka.location:com.lib.lokdroid.core/LogManager///PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/index.html
-$dokka.location:com.lib.lokdroid.core/LogManager/LogManager/#com.lib.lokdroid.domain.model.Level#com.lib.lokdroid.domain.Logger#com.lib.lokdroid.domain.Formatter#kotlin.String#com.lib.lokdroid.domain.LogBuilderProvider/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/-log-manager.html
+$dokka.location:com.lib.lokdroid.core/LogManager/LogManager/#com.lib.lokdroid.domain.model.Level#com.lib.lokdroid.domain.Logger#com.lib.lokdroid.domain.Formatter#kotlin.Function0[kotlin.String]#com.lib.lokdroid.domain.LogBuilderProvider/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/-log-manager.html
 $dokka.location:com.lib.lokdroid.core/LogManager/formatter/#/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/formatter.html
 $dokka.location:com.lib.lokdroid.core/LogManager/log/#com.lib.lokdroid.domain.model.Level#kotlin.Function1[com.lib.lokdroid.domain.LogBuilder,kotlin.Unit]/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/log.html
 $dokka.location:com.lib.lokdroid.core/LogManager/log/#com.lib.lokdroid.domain.model.Level#kotlin.String/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/log.html
@@ -29,7 +29,7 @@ $dokka.location:com.lib.lokdroid.core/LogManager/logBuilderProvider/#/PointingTo
 $dokka.location:com.lib.lokdroid.core/LogManager/logger/#/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/logger.html
 $dokka.location:com.lib.lokdroid.core/LogManager/minLevel/#/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/min-level.html
 $dokka.location:com.lib.lokdroid.core/LogManager/performByMinLevel/com.lib.lokdroid.domain.model.Level#kotlin.Function0[kotlin.Unit]/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/perform-by-min-level.html
-$dokka.location:com.lib.lokdroid.core/LogManager/tag/#/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/tag.html
+$dokka.location:com.lib.lokdroid.core/LogManager/tagProvider/#/PointingToDeclaration/library/com.lib.lokdroid.core/-log-manager/tag-provider.html
 $dokka.location:com.lib.lokdroid.data.default_implementation.logger.logcat.entities////PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation.logger.logcat.entities/index.html
 $dokka.location:com.lib.lokdroid.data.default_implementation.logger.logcat.entities/LogHeader///PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation.logger.logcat.entities/-log-header/index.html
 $dokka.location:com.lib.lokdroid.data.default_implementation.logger.logcat.entities/LogHeader/LogHeader/#kotlin.String#kotlin.Int#kotlin.Int#kotlin.String#kotlin.String#kotlin.String#com.lib.lokdroid.data.default_implementation.logger.logcat.entities.Timestamp/PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation.logger.logcat.entities/-log-header/-log-header.html
@@ -124,8 +124,8 @@ $dokka.location:com.lib.lokdroid.data.default_implementation/DefaultLogBuilder/t
 $dokka.location:com.lib.lokdroid.data.default_implementation/DefaultLogBuilderProvider///PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-log-builder-provider/index.html
 $dokka.location:com.lib.lokdroid.data.default_implementation/DefaultLogBuilderProvider/DefaultLogBuilderProvider/#/PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-log-builder-provider/-default-log-builder-provider.html
 $dokka.location:com.lib.lokdroid.data.default_implementation/DefaultLogBuilderProvider/provide/#/PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-log-builder-provider/provide.html
-$dokka.location:com.lib.lokdroid.data.default_implementation/DefaultTag///PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-tag/index.html
-$dokka.location:com.lib.lokdroid.data.default_implementation/DefaultTag/value/#/PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-tag/value.html
+$dokka.location:com.lib.lokdroid.data.default_implementation/DefaultTagProvider///PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-tag-provider/index.html
+$dokka.location:com.lib.lokdroid.data.default_implementation/DefaultTagProvider/getTag/#/PointingToDeclaration/library/com.lib.lokdroid.data.default_implementation/-default-tag-provider/get-tag.html
 $dokka.location:com.lib.lokdroid.domain.model////PointingToDeclaration/library/com.lib.lokdroid.domain.model/index.html
 $dokka.location:com.lib.lokdroid.domain.model/FileFormat.Logcat///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}library/com.lib.lokdroid.domain.model/-file-format/-logcat/index.html
 $dokka.location:com.lib.lokdroid.domain.model/FileFormat.Txt///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}library/com.lib.lokdroid.domain.model/-file-format/-txt/index.html
