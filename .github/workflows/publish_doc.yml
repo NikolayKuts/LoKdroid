@@ -31,12 +31,6 @@ jobs:
       - name: Create lokdroid_secring.gpg file
         run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | gpg --dearmor > lokdroid_secring.gpg
 
-      - name: Use lokdroid_secring.gpg
-        run: echo "Using the file located at ${{ github.workspace }}/lokdroid_secring.gpg"
-
-      - name: Debug secrets
-        run: echo "${{ secrets.GRADLE_PROPERTIES_CONTENT }}" | sed 's/./*/g'
-
       - name: Display project directory contents
         run: ls -la
 
