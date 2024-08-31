@@ -31,6 +31,9 @@ jobs:
       - name: Create lokdroid_secring.gpg file
         run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | base64 --decode > lokdroid_secring.gpg
 
+      - name: Display project directory contents
+        run: ls -la
+
       - name: Create documentation file
         run: ./gradlew dokkaHtml
 
