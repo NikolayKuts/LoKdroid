@@ -25,6 +25,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Create gradle.properties file
+        run: echo "${{ secrets.GRADLE_PROPERTIES_CONTENT }}" > gradle.properties
+
+      - name: Create lokdroid_secring.gpg file
+        run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | base64 --decode > lokdroid_secring.gpg
+
       - name: Create documentation file
         run: ./gradlew dokkaHtml
 
