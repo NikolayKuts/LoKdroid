@@ -1,6 +1,6 @@
 package com.lib.lokdroid.core
 
-import com.lib.lokdroid.data.default_implementation.DefaultFormatter
+import com.lib.lokdroid.core.LoKdroid.initialize
 import com.lib.lokdroid.data.default_implementation.DefaultLogBuilderProvider
 import com.lib.lokdroid.data.default_implementation.DefaultTagProvider
 import com.lib.lokdroid.data.default_implementation.logger.ConsoleLogger
@@ -18,7 +18,6 @@ import com.lib.lokdroid.domain.model.Level
  * Before using the logging functions, it must be initialized using [initialize].
  * Failing to do so will result in a RuntimeException when trying to log.
  */
-
 object LoKdroid {
 
     private var logManager: LogManager? = null
@@ -50,7 +49,7 @@ object LoKdroid {
     fun initialize(
         minLevel: Level = Level.Verbose,
         logger: Logger = ConsoleLogger,
-        formatter: Formatter = DefaultFormatter,
+        formatter: Formatter = Formatter { message -> message },
         tagProvider: () -> String = { DefaultTagProvider.getTag() },
         logBuilderProvider: LogBuilderProvider = DefaultLogBuilderProvider()
     ) {
