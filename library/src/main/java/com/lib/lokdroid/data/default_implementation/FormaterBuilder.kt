@@ -3,12 +3,34 @@ package com.lib.lokdroid.data.default_implementation
 import com.lib.lokdroid.domain.Formatter
 
 /**
- * A builder class for constructing custom formatted log messages.
+ * A builder class for constructing custom formatted log messages using a simple chain DSL.
  *
- * The [FormaterBuilder] allows you to specify various formatting tasks such as
- * including the original message, adding a line reference, a pointer, or custom text.
- * Once all formatting tasks are added, the final `Formatter` object is built,
- * which applies these tasks to format the log message when invoked.
+ * The [FormaterBuilder] lets you compose the final log output by chaining steps in the desired
+ * order: e.g. pointer, spaces, clickable line reference, the actual message, and any custom text.
+ * Important: the original message is NOT added automatically — you MUST call [message] somewhere
+ * in the chain, otherwise the resulting formatted text will not contain your message.
+ *
+ * Available steps:
+ * - [withPointer] — adds a pointer string (default: `--->`).
+ * - [space] — adds a single space character.
+ * - [withLineReference] — adds a clickable `FileName:LineNumber` reference recognized by Android Studio.
+ * - [message] — injects the original message text (MANDATORY if you want the message to appear).
+ * - [custom] — adds any custom text.
+ *
+ * Usage example:
+ *
+ * val formatter = FormaterBuilder()
+ *     .withPointer()
+ *     .space()
+ *     .withLineReference()
+ *     .space()
+ *     .message() // mandatory to include the message content
+ *     .space()
+ *     .custom(text = "some custom text")
+ *     .build()
+ *
+ * // Later in initialize():
+ * // LoKdroid.initialize(formatter = formatter)
  */
 class FormaterBuilder {
 

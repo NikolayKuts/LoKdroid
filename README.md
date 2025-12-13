@@ -80,22 +80,39 @@ logE(message = "some message")
 ### Multiple logging via LogBuilder
 
 ```kotlin
-..
 
 val year: Int = currentDate.year
 val month: Int = currentDate.monthValue
-val dayOfWeek: DayOfWeek = currentDate.dayOfWeek
+val dayOfWeek: java.time.DayOfWeek = currentDate.dayOfWeek
 
 logI {
-    message("Date:")       // title
-    message("Year: $year")
-    message("Month: $month")
-    message("Day of the Week: $dayOfWeek")
+    "Date:"()
+    "Year: $year"()
+    "Month: $month"()
+    "Day of the Week: $dayOfWeek"()
 }
 ```
 #### Output
 
 <img width="1545" alt="image" src="https://github.com/user-attachments/assets/1469f691-b73b-437e-b7e0-f6a2d2dcda1a">
+
+### Formatter builder (chain DSL)
+
+You can configure how a single-line log message is formatted by chaining steps with `FormaterBuilder` and passing the built `Formatter` into `LoKdroid.initialize`.
+
+```kotlin
+LoKdroid.initialize(
+    formatter = FormaterBuilder()
+        .withPointer()        // adds "--->"
+        .space()              // adds a space
+        .withLineReference()  // adds clickable File.kt:123 (Android Studio navigable)
+        .space()
+        .message()            // MANDATORY: injects your original log message
+        .space()
+        .custom(text = "some custom text") // appends any custom text
+        .build()
+)
+```
 
 ## Default implementations
 
@@ -104,7 +121,7 @@ logI {
 fun initialize(
     minLevel: Level = Level.Verbose,
     logger: Logger = ConsoleLogger,
-    formatter: Formatter = DefaultFormatter,
+    formatter: Formatter = Formatter { message -> message },
     tagProvider: () -> String = { DefaultTagProvider.getTag() },
     logBuilderProvider: LogBuilderProvider = DefaultLogBuilderProvider()
 )
@@ -127,11 +144,11 @@ LoKdroid.initialize(
     logBuilderProvider = {
         /** provide your custom LogBuilder */
         object : LogBuilder {
-            override fun build(): String {
-                return "build your string"
-            }
-            override fun message(value: Any) {
-                /** use this block to build multiple log */
+            
+            override fun build(): String = "build your string"
+            
+            override operator fun String.invoke() {
+                /** use this block to build multiple log lines */
             }
         }
     }
