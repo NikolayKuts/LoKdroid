@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>DefaultLogBuilder</title>
+    <title>LogBuilder</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
@@ -61,23 +61,23 @@
                 <div class="sidebar--inner" id="sideMenu"></div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="classlike" id="content" pageIds="library::com.lib.lokdroid.data.default_implementation/DefaultLogBuilder///PointingToDeclaration//-1887420133">
-  <div class="breadcrumbs"><a href="../../../index.html">library</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.data.default_implementation</a><span class="delimiter">/</span><span class="current">DefaultLogBuilder</span></div>
+<div class="main-content" data-page-type="classlike" id="content" pageIds="library::com.lib.lokdroid.data.default_implementation/LogBuilder///PointingToDeclaration//-1887420133">
+  <div class="breadcrumbs"><a href="../../../index.html">library</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.data.default_implementation</a><span class="delimiter">/</span><span class="current">LogBuilder</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>Default</span><wbr></wbr><span>Log</span><wbr></wbr><span><span>Builder</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">DefaultLogBuilder</a> : <a href="../../com.lib.lokdroid.domain/-log-builder/index.html">LogBuilder</a></div><p class="paragraph">Implements the <a href="../../com.lib.lokdroid.domain/-log-builder/index.html">LogBuilder</a> interface providing a simple log building mechanism.</p><p class="paragraph">This class uses two <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.text/-string-builder/index.html">StringBuilder</a>s to construct a log message consisting of a title and content. The first message passed to <a href="message.html">message</a> will be considered the title, and subsequent messages will be treated as content, appended under the title in a list format.</p></div></div>
+    <h1 class="cover"><span>Log</span><wbr></wbr><span><span>Builder</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">LogBuilder</a> : <a href="../../com.lib.lokdroid.domain/-i-log-builder/index.html">ILogBuilder</a></div><p class="paragraph">Default implementation of <a href="../../com.lib.lokdroid.domain/-i-log-builder/index.html">ILogBuilder</a> providing a simple DSL-based log composition.</p><p class="paragraph">Each string literal invoked as a function inside a logging block is appended as a new line. The very first line is treated as a header, subsequent lines are prefixed with &quot;->&quot; for readability.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
         <h2 class="">Constructors</h2>
-        <div class="table"><a data-name="-1134798757%2FConstructors%2F-1887420133" anchor-label="DefaultLogBuilder" id="-1134798757%2FConstructors%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
+        <div class="table"><a data-name="-1571771283%2FConstructors%2F-1887420133" anchor-label="LogBuilder" id="-1571771283%2FConstructors%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
           <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-default-log-builder.html"><span>Default</span><wbr></wbr><span>Log</span><wbr></wbr><span><span>Builder</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1134798757%2FConstructors%2F-1887420133"></span>
+                  <div><a href="-log-builder.html"><span>Log</span><wbr></wbr><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1571771283%2FConstructors%2F-1887420133"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
@@ -91,12 +91,12 @@
       </div>
       <div data-togglable="PROPERTY">
         <h2 class="">Properties</h2>
-        <div class="table"><a data-name="1322078853%2FProperties%2F-1887420133" anchor-label="contentBuilder" id="1322078853%2FProperties%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
+        <div class="table"><a data-name="1497593410%2FProperties%2F-1887420133" anchor-label="contentBuilder" id="1497593410%2FProperties%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
           <div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="content-builder.html"><span>content</span><wbr></wbr><span><span>Builder</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1322078853%2FProperties%2F-1887420133"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1497593410%2FProperties%2F-1887420133"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
@@ -106,51 +106,36 @@
               </div>
             </div>
           </div>
-<a data-name="1227708132%2FProperties%2F-1887420133" anchor-label="titleBuilder" id="1227708132%2FProperties%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
-          <div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="title-builder.html"><span>title</span><wbr></wbr><span><span>Builder</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1227708132%2FProperties%2F-1887420133"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="title-builder.html">titleBuilder</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/lang/StringBuilder.html">StringBuilder</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div data-togglable="FUNCTION">
         <h2 class="">Functions</h2>
-        <div class="table"><a data-name="1027498085%2FFunctions%2F-1887420133" anchor-label="build" id="1027498085%2FFunctions%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
+        <div class="table"><a data-name="455517192%2FFunctions%2F-1887420133" anchor-label="build" id="455517192%2FFunctions%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
           <div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="build.html"><span><span>build</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1027498085%2FFunctions%2F-1887420133"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="455517192%2FFunctions%2F-1887420133"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Builds and returns the final log message, combining the title and content.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Builds and returns the final log message combined from all lines.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="676612973%2FFunctions%2F-1887420133" anchor-label="message" id="676612973%2FFunctions%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
+<a data-name="1726783278%2FFunctions%2F-1887420133" anchor-label="invoke" id="1726783278%2FFunctions%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
           <div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="message.html"><span><span>message</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="676612973%2FFunctions%2F-1887420133"></span>
+                  <div><a href="invoke.html"><span><span>invoke</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1726783278%2FFunctions%2F-1887420133"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="message.html"><span class="token function">message</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Appends the given value to the log message. If no title has been set, the first value becomes the title. Any subsequent values are appended as content.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">.</span><a href="invoke.html"><span class="token function">invoke</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a new message line to this builder via a DSL-style string invocation.</p></div></div></div>
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>message</title>
+    <title>build</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
@@ -61,12 +61,12 @@
                 <div class="sidebar--inner" id="sideMenu"></div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="member" id="content" pageIds="library::com.lib.lokdroid.data.default_implementation/DefaultLogBuilder/message/#kotlin.Any/PointingToDeclaration//-1887420133">
-  <div class="breadcrumbs"><a href="../../../index.html">library</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.data.default_implementation</a><span class="delimiter">/</span><a href="index.html">DefaultLogBuilder</a><span class="delimiter">/</span><span class="current">message</span></div>
+<div class="main-content" data-page-type="member" id="content" pageIds="library::com.lib.lokdroid.domain/ILogBuilder/build/#/PointingToDeclaration//-1887420133">
+  <div class="breadcrumbs"><a href="../../../index.html">library</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.domain</a><span class="delimiter">/</span><a href="index.html">ILogBuilder</a><span class="delimiter">/</span><span class="current">build</span></div>
   <div class="cover ">
-    <h1 class="cover"><span><span>message</span></span></h1>
+    <h1 class="cover"><span><span>build</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="message.html"><span class="token function">message</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a></span></span><span class="token punctuation">)</span></div><p class="paragraph">Appends the given value to the log message. If no title has been set, the first value becomes the title. Any subsequent values are appended as content.</p><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>value</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The message component to add to the log. The value is converted to a string and either becomes the title or part of the content.</p></div></div></div></div></div></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><p class="paragraph">Builds and returns the final log message as a string.</p><p class="paragraph">This method consolidates all previously provided message components into a single string. The exact formatting and ordering of components in the resulting string are determined by the specific implementation of this interface.</p><span class="kdoc-tag"><h4 class="">Return</h4><p class="paragraph">The fully formatted log message as a String.</p></span></div></div>
 </div>
       <div class="footer">
         <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span

@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>DefaultLogBuilderProvider</title>
+    <title>ILogBuilderProvider</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
@@ -61,47 +61,28 @@
                 <div class="sidebar--inner" id="sideMenu"></div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="classlike" id="content" pageIds="library::com.lib.lokdroid.data.default_implementation/DefaultLogBuilderProvider///PointingToDeclaration//-1887420133">
-  <div class="breadcrumbs"><a href="../../../index.html">library</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.data.default_implementation</a><span class="delimiter">/</span><span class="current">DefaultLogBuilderProvider</span></div>
+<div class="main-content" data-page-type="classlike" id="content" pageIds="library::com.lib.lokdroid.domain/ILogBuilderProvider///PointingToDeclaration//-1887420133">
+  <div class="breadcrumbs"><a href="../../../index.html">library</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.domain</a><span class="delimiter">/</span><span class="current">ILogBuilderProvider</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>Default</span><wbr></wbr><span>Log</span><wbr></wbr><span>Builder</span><wbr></wbr><span><span>Provider</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">DefaultLogBuilderProvider</a> : <a href="../../com.lib.lokdroid.domain/-log-builder-provider/index.html">LogBuilderProvider</a></div><p class="paragraph">Provides a default implementation of the <a href="../../com.lib.lokdroid.domain/-log-builder-provider/index.html">LogBuilderProvider</a> interface by supplying instances of <a href="../-default-log-builder/index.html">DefaultLogBuilder</a>.</p><p class="paragraph">This class serves as a concrete provider for creating new <a href="../-default-log-builder/index.html">DefaultLogBuilder</a> instances, which are used for constructing log messages in a structured format. It ensures that any logging system using this provider gets a fresh instance of <a href="../-default-log-builder/index.html">DefaultLogBuilder</a> each time a log builder is requested.</p></div></div>
+    <h1 class="cover"><span>ILog</span><wbr></wbr><span>Builder</span><wbr></wbr><span><span>Provider</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token keyword">interface </span><a href="index.html">ILogBuilderProvider</a></div><p class="paragraph">Provides a functional interface for obtaining instances of <a href="../-i-log-builder/index.html">ILogBuilder</a>.</p><p class="paragraph">This interface defines a single method <a href="provide.html">provide</a> that is used to create new instances of <a href="../-i-log-builder/index.html">ILogBuilder</a> each time the logging function is called.</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../../com.lib.lokdroid.data.default_implementation/-log-builder-provider/index.html">LogBuilderProvider</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
-      <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
-        <div class="table"><a data-name="62059705%2FConstructors%2F-1887420133" anchor-label="DefaultLogBuilderProvider" id="62059705%2FConstructors%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="-default-log-builder-provider.html"><span>Default</span><wbr></wbr><span>Log</span><wbr></wbr><span>Builder</span><wbr></wbr><span><span>Provider</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="62059705%2FConstructors%2F-1887420133"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div data-togglable="FUNCTION">
         <h2 class="">Functions</h2>
-        <div class="table"><a data-name="-156127455%2FFunctions%2F-1887420133" anchor-label="provide" id="-156127455%2FFunctions%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
+        <div class="table"><a data-name="943155425%2FFunctions%2F-1887420133" anchor-label="provide" id="943155425%2FFunctions%2F-1887420133" data-filterable-set=":library:dokkaHtml/release"></a>
           <div class="table-row" data-filterable-current=":library:dokkaHtml/release" data-filterable-set=":library:dokkaHtml/release">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="provide.html"><span><span>provide</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-156127455%2FFunctions%2F-1887420133"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="943155425%2FFunctions%2F-1887420133"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="provide.html"><span class="token function">provide</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-default-log-builder/index.html">DefaultLogBuilder</a></div><div class="brief "><p class="paragraph">Creates and returns a new instance of <a href="../-default-log-builder/index.html">DefaultLogBuilder</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="provide.html"><span class="token function">provide</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-i-log-builder/index.html">ILogBuilder</a></div><div class="brief "><p class="paragraph">Creates and returns a new instance of <a href="../-i-log-builder/index.html">ILogBuilder</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
