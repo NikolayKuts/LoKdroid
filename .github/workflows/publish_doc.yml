@@ -9,15 +9,30 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Checkout base branch for PRs, or 'development' on manual dispatch
+      - name: Checkout base branch (PR)
+        if: ${{ github.event_name == 'pull_request' }}
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Checkout development (manual)
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: development
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -30,6 +45,29 @@ jobs:
 
       - name: Create lokdroid_secring.gpg file
         run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | gpg --dearmor > lokdroid_secring.gpg
+
+      - name: Sync README version with libs.versions.toml
+        run: |
+          ./gradlew :library:syncReadmeVersion
+
+      - name: Commit and push README update if changed
+        id: commit_readme
+        run: |
+          set -e
+          VERSION=$(grep -E '^\s*lokdroid\s*=\s*"' gradle/libs.versions.toml | sed -E 's/.*"([^"]+)".*/\1/')
+          if git diff --quiet README.md; then
+            echo "No README changes to commit."
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "README changed, committing..."
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md
+            git commit -m "docs(README): sync dependency version to v${VERSION}"
+            CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            git push origin "${CURRENT_BRANCH}"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Display project directory contents
         run: ls -la
