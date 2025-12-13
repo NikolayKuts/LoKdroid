@@ -1,17 +1,17 @@
 package com.lib.lokdroid.data.default_implementation.logger
 
 import android.util.Log
-import com.lib.lokdroid.domain.Logger
+import com.lib.lokdroid.domain.ILogger
 import com.lib.lokdroid.domain.model.Level
 
 /**
- * Implementation of the [Logger] interface that logs messages to the Android console using [Log].
+ * Implementation of the [ILogger] interface that logs messages to the Android console using [Log].
  *
  * This logger converts logging levels into Android's log priority constants and outputs messages
  * to the system's log buffer, typically viewable via Logcat.
  */
 
-object ConsoleLogger : Logger {
+object ConsoleLogger : ILogger {
 
     /**
      * Logs a message to the console with the specified logging level, tag, and message.

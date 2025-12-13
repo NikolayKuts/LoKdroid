@@ -1,7 +1,7 @@
 package com.lib.lokdroid.data.default_implementation.logger
 
 import com.lib.lokdroid.data.default_implementation.formatDate
-import com.lib.lokdroid.domain.Logger
+import com.lib.lokdroid.domain.ILogger
 import com.lib.lokdroid.domain.model.Level
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.defaultRequest
@@ -13,7 +13,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 /**
- * A singleton implementation of the [Logger] interface that sends log messages to a remote server.
+ * A singleton implementation of the [ILogger] interface that sends log messages to a remote server.
  *
  * This logger uses Ktor for HTTP requests and Kotlin coroutines for asynchronous operations.
  * It posts log messages to a specified base URL.
@@ -23,11 +23,11 @@ import kotlinx.coroutines.launch
 
 class RemoteLogger private constructor(
     private val baseUrl: String,
-) : Logger {
+) : ILogger {
 
     companion object {
 
-        private var instance: Logger? = null
+        private var instance: ILogger? = null
         private val lock = Any()
 
         /**
@@ -39,7 +39,7 @@ class RemoteLogger private constructor(
          * @return The singleton instance of [RemoteLogger].
          */
 
-        fun getInstance(url: String): Logger = synchronized(lock) {
+        fun getInstance(url: String): ILogger = synchronized(lock) {
             instance ?: RemoteLogger(baseUrl = url).also { instance = it }
         }
     }

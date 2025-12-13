@@ -1,6 +1,6 @@
 package com.lib.lokdroid.core
 
-import com.lib.lokdroid.domain.LogBuilder
+import com.lib.lokdroid.domain.ILogBuilder
 import com.lib.lokdroid.domain.model.Level
 
 /**
@@ -65,63 +65,63 @@ fun logE(message: Any) {
 }
 
 /**
- * Logs a complex message constructed via [LogBuilder] at the specified level.
+ * Logs a complex message constructed via [ILogBuilder] at the specified level.
  * This method allows for more complex and dynamic log message constructions.
  *
  * @param level The severity level of the log; defaults to [LoKdroid.minLevel].
- * @param block A lambda block that applies configurations to the [LogBuilder] instance.
+ * @param block A lambda block that applies configurations to the [ILogBuilder] instance.
  */
 
-fun log(level: Level = LoKdroid.minLevel, block: LogBuilder.() -> Unit) {
+fun log(level: Level = LoKdroid.minLevel, block: ILogBuilder.() -> Unit) {
     LoKdroid.log(level = level, block = block)
 }
 
 /**
- * Logs a complex message at the [Level.Verbose] using a [LogBuilder].
+ * Logs a complex message at the [Level.Verbose] using a [ILogBuilder].
  *
- * @param block A lambda block that applies configurations to the [LogBuilder] instance.
+ * @param block A lambda block that applies configurations to the [ILogBuilder] instance.
  */
 
-fun logV(block: LogBuilder.() -> Unit) {
+fun logV(block: ILogBuilder.() -> Unit) {
     LoKdroid.log(level = Level.Verbose, block = block)
 }
 
 /**
- * Logs a complex message at the [Level.Debug] using a [LogBuilder].
+ * Logs a complex message at the [Level.Debug] using a [ILogBuilder].
  *
- * @param block A lambda block that applies configurations to the [LogBuilder] instance.
+ * @param block A lambda block that applies configurations to the [ILogBuilder] instance.
  */
 
-fun logD(block: LogBuilder.() -> Unit) {
+fun logD(block: ILogBuilder.() -> Unit) {
     LoKdroid.log(level = Level.Debug, block = block)
 }
 
 /**
- * Logs a complex message at the [Level.Info] using a [LogBuilder].
+ * Logs a complex message at the [Level.Info] using a [ILogBuilder].
  *
- * @param block A lambda block that applies configurations to the [LogBuilder] instance.
+ * @param block A lambda block that applies configurations to the [ILogBuilder] instance.
  */
 
-fun logI(block: LogBuilder.() -> Unit) {
+fun logI(block: ILogBuilder.() -> Unit) {
     LoKdroid.log(level = Level.Info, block = block)
 }
 
 /**
- * Logs a complex message at the [Level.Warn] using a [LogBuilder].
+ * Logs a complex message at the [Level.Warn] using a [ILogBuilder].
  *
- * @param block A lambda block that applies configurations to the [LogBuilder] instance.
+ * @param block A lambda block that applies configurations to the [ILogBuilder] instance.
  */
 
-fun logW(block: LogBuilder.() -> Unit) {
+fun logW(block: ILogBuilder.() -> Unit) {
     LoKdroid.log(level = Level.Warn, block = block)
 }
 
 /**
- * Logs a complex message at the [Level.Error] using a [LogBuilder].
+ * Logs a complex message at the [Level.Error] using a [ILogBuilder].
  *
- * @param block A lambda block that applies configurations to the [LogBuilder] instance.
+ * @param block A lambda block that applies configurations to the [ILogBuilder] instance.
  */
 
-fun logE(block: LogBuilder.() -> Unit) {
+fun logE(block: ILogBuilder.() -> Unit) {
     LoKdroid.log(level = Level.Error, block = block)
 }

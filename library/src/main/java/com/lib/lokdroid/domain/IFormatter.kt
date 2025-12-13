@@ -8,7 +8,7 @@ package com.lib.lokdroid.domain
  * such as applying text styles, correcting grammar, or adding specific prefixes or suffixes.
  */
 
-fun interface Formatter {
+fun interface IFormatter {
 
     /**
     * Formats the given message and returns the formatted string.

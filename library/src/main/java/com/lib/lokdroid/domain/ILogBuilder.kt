@@ -4,7 +4,7 @@ package com.lib.lokdroid.domain
  * An interface for building log messages using a simple DSL.
  */
 
-interface LogBuilder {
+interface ILogBuilder {
 
     /**
      * Builds and returns the final log message as a string.

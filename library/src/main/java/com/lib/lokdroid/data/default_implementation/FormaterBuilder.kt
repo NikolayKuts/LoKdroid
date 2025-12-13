@@ -1,6 +1,6 @@
 package com.lib.lokdroid.data.default_implementation
 
-import com.lib.lokdroid.domain.Formatter
+import com.lib.lokdroid.domain.IFormatter
 
 /**
  * A builder class for constructing custom formatted log messages using a simple chain DSL.
@@ -40,12 +40,12 @@ class FormaterBuilder {
     private val formatingTasks: MutableList<() -> String> = mutableListOf()
 
     /**
-     * Builds and returns a [Formatter] that applies all the formatting tasks
+     * Builds and returns a [IFormatter] that applies all the formatting tasks
      * defined in the builder to the given log message.
      *
-     * @return A [Formatter] instance that formats the message according to the added tasks.
+     * @return A [IFormatter] instance that formats the message according to the added tasks.
      */
-    fun build(): Formatter = Formatter { message ->
+    fun build(): IFormatter = IFormatter { message ->
         logMessage = message
 
         buildString {

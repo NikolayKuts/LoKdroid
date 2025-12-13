@@ -77,7 +77,7 @@ logE(message = "some message")
 <img width="1551" alt="image" src="https://github.com/user-attachments/assets/92a2e541-ef81-4e22-a6fc-82cbfe53d541">
 
 
-### Multiple logging via LogBuilder
+### Multiple logging via ILogBuilder
 
 ```kotlin
 
@@ -98,7 +98,7 @@ logI {
 
 ### Formatter builder (chain DSL)
 
-You can configure how a single-line log message is formatted by chaining steps with `FormaterBuilder` and passing the built `Formatter` into `LoKdroid.initialize`.
+You can configure how a single-line log message is formatted by chaining steps with `FormaterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
 
 ```kotlin
 LoKdroid.initialize(
@@ -120,10 +120,10 @@ LoKdroid.initialize(
 ```kotlin
 fun initialize(
     minLevel: Level = Level.Verbose,
-    logger: Logger = ConsoleLogger,
-    formatter: Formatter = Formatter { message -> message },
-    tagProvider: () -> String = { DefaultTagProvider.getTag() },
-    logBuilderProvider: LogBuilderProvider = DefaultLogBuilderProvider()
+    logger: ILogger = ConsoleLogger,
+    formatter: IFormatter = IFormatter { message -> message },
+    tagProvider: () -> String = { TagProvider.getTag() },
+    logBuilderProvider: ILogBuilderProvider = LogBuilderProvider()
 )
 ```
 #### There are several implementations for targeted logging.
@@ -142,8 +142,8 @@ LoKdroid.initialize(
     formatter = { message -> "return formatted message: $message" },
     tagProvider = { "custom tag" },
     logBuilderProvider = {
-        /** provide your custom LogBuilder */
-        object : LogBuilder {
+        /** provide your custom ILogBuilder */
+        object : ILogBuilder {
             
             override fun build(): String = "build your string"
             
