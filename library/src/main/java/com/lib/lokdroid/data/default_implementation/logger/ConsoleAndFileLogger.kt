@@ -1,6 +1,6 @@
 package com.lib.lokdroid.data.default_implementation.logger
 
-import com.lib.lokdroid.domain.Logger
+import com.lib.lokdroid.domain.ILogger
 import com.lib.lokdroid.domain.model.Level
 
 /**
@@ -15,7 +15,7 @@ import com.lib.lokdroid.domain.model.Level
 
 class ConsoleAndFileLogger(
     private val fileLogger: FileLogger,
-) : Logger {
+) : ILogger {
 
     /**
      * Logs a message to both the file and console with the specified level, tag, and message.

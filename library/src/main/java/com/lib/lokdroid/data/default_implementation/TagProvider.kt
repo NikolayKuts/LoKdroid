@@ -7,7 +7,7 @@ package com.lib.lokdroid.data.default_implementation
  * from which the logging method is called. It helps in identifying the source of log messages
  * when a specific tag is not manually provided.
  */
-object DefaultTagProvider {
+object TagProvider {
 
     /**
      * Retrieves the class name from the call stack as a logging tag.

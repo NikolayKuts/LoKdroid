@@ -9,7 +9,7 @@ import com.lib.lokdroid.data.default_implementation.logger.logcat.entities.LogHe
 import com.lib.lokdroid.data.default_implementation.logger.logcat.entities.LogcatContent
 import com.lib.lokdroid.data.default_implementation.logger.logcat.entities.LogcatMessage
 import com.lib.lokdroid.data.default_implementation.logger.logcat.entities.Timestamp
-import com.lib.lokdroid.domain.Logger
+import com.lib.lokdroid.domain.ILogger
 import com.lib.lokdroid.domain.model.Level
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
@@ -20,13 +20,13 @@ import java.io.IOException
 import java.io.RandomAccessFile
 
 /**
- * A [Logger] implementation that writes log messages to a file in a structured JSON format,
+ * A [ILogger] implementation that writes log messages to a file in a structured JSON format,
  * allowing import in new versions of Android Studio via the Logcat command-line tool
  *
  * @property logFile The file where log messages will be written.
  * @property context The context used to retrieve application-specific information.
  */
-internal class LogcatLogger(private val logFile: File, private val context: Context) : Logger {
+internal class LogcatLogger(private val logFile: File, private val context: Context) : ILogger {
 
     companion object {
 

@@ -5,7 +5,7 @@ import com.lib.lokdroid.data.default_implementation.formatDate
 import com.lib.lokdroid.data.default_implementation.logger.FileLogger.Companion.DEFAULT_FILE_NAME
 import com.lib.lokdroid.data.default_implementation.logger.logcat.LogcatLogger
 import com.lib.lokdroid.data.default_implementation.logger.txt.TxtLogger
-import com.lib.lokdroid.domain.Logger
+import com.lib.lokdroid.domain.ILogger
 import com.lib.lokdroid.domain.model.FileFormat
 import com.lib.lokdroid.domain.model.Level
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +32,7 @@ class FileLogger(
     filePath: String = context.filesDir.path,
     fileName: String = DEFAULT_FILE_NAME,
     private val format: FileFormat = FileFormat.Logcat
-) : Logger {
+) : ILogger {
 
     companion object {
 

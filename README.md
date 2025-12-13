@@ -77,25 +77,42 @@ logE(message = "some message")
 <img width="1551" alt="image" src="https://github.com/user-attachments/assets/92a2e541-ef81-4e22-a6fc-82cbfe53d541">
 
 
-### Multiple logging via LogBuilder
+### Multiple logging via ILogBuilder
 
 ```kotlin
-..
 
 val year: Int = currentDate.year
 val month: Int = currentDate.monthValue
-val dayOfWeek: DayOfWeek = currentDate.dayOfWeek
+val dayOfWeek: java.time.DayOfWeek = currentDate.dayOfWeek
 
 logI {
-    message("Date:")       // title
-    message("Year: $year")
-    message("Month: $month")
-    message("Day of the Week: $dayOfWeek")
+    "Date:"()
+    "Year: $year"()
+    "Month: $month"()
+    "Day of the Week: $dayOfWeek"()
 }
 ```
 #### Output
 
 <img width="1545" alt="image" src="https://github.com/user-attachments/assets/1469f691-b73b-437e-b7e0-f6a2d2dcda1a">
+
+### Formatter builder (chain DSL)
+
+You can configure how a single-line log message is formatted by chaining steps with `FormaterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
+
+```kotlin
+LoKdroid.initialize(
+    formatter = FormaterBuilder()
+        .withPointer()        // adds "--->"
+        .space()              // adds a space
+        .withLineReference()  // adds clickable File.kt:123 (Android Studio navigable)
+        .space()
+        .message()            // MANDATORY: injects your original log message
+        .space()
+        .custom(text = "some custom text") // appends any custom text
+        .build()
+)
+```
 
 ## Default implementations
 
@@ -103,10 +120,10 @@ logI {
 ```kotlin
 fun initialize(
     minLevel: Level = Level.Verbose,
-    logger: Logger = ConsoleLogger,
-    formatter: Formatter = DefaultFormatter,
-    tagProvider: () -> String = { DefaultTagProvider.getTag() },
-    logBuilderProvider: LogBuilderProvider = DefaultLogBuilderProvider()
+    logger: ILogger = ConsoleLogger,
+    formatter: IFormatter = IFormatter { message -> message },
+    tagProvider: () -> String = { TagProvider.getTag() },
+    logBuilderProvider: ILogBuilderProvider = LogBuilderProvider()
 )
 ```
 #### There are several implementations for targeted logging.
@@ -125,13 +142,13 @@ LoKdroid.initialize(
     formatter = { message -> "return formatted message: $message" },
     tagProvider = { "custom tag" },
     logBuilderProvider = {
-        /** provide your custom LogBuilder */
-        object : LogBuilder {
-            override fun build(): String {
-                return "build your string"
-            }
-            override fun message(value: Any) {
-                /** use this block to build multiple log */
+        /** provide your custom ILogBuilder */
+        object : ILogBuilder {
+            
+            override fun build(): String = "build your string"
+            
+            override operator fun String.invoke() {
+                /** use this block to build multiple log lines */
             }
         }
     }

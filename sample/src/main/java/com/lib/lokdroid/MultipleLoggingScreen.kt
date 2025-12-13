@@ -47,7 +47,8 @@ fun MultipleLoggingScreen(data: List<String>) {
 
 private fun invokeMultipleLog(level: Level, data: List<String>) {
     log(level = level) {
-        message("Multiple log")
-        data.forEach { message(value = it) }
+        "Multiple log"()
+
+        data.forEach { value -> value() }
     }
 }

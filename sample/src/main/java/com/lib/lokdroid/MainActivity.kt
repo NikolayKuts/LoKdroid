@@ -11,9 +11,6 @@ import androidx.navigation.compose.rememberNavController
 import com.lib.lokdroid.core.LoKdroid
 import com.lib.lokdroid.core.logI
 import com.lib.lokdroid.core.logV
-import com.lib.lokdroid.data.default_implementation.FormaterBuilder
-import com.lib.lokdroid.domain.LogBuilder
-import com.lib.lokdroid.domain.model.Level
 import com.lib.lokdroid.navigation.AppNavGraph
 import com.lib.lokdroid.navigation.Screen
 import com.lib.lokdroid.ui.theme.LoKdroidTheme
@@ -62,15 +59,15 @@ class MainActivity : ComponentActivity() {
 //            formatter = { message -> "return formatted message: $message" }, /** or use FormaterBuilder */
 //            tagProvider = { "custom tag" },
 //            logBuilderProvider = {
-//                /** provide your custom LogBuilder */
-//                object : LogBuilder {
+//                /** provide your custom ILogBuilder */
+//                object : com.lib.lokdroid.domain.ILogBuilder {
 //
 //                    override fun build(): String {
 //                        return "build your string"
 //                    }
 //
-//                    override fun message(value: Any) {
-//                        /** use this block to build multiple log */
+//                    override operator fun String.invoke() {
+//                        /** use this block to build multiple log lines */
 //                    }
 //                }
 //            }

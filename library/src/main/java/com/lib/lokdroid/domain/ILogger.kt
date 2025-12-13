@@ -9,7 +9,7 @@ import com.lib.lokdroid.domain.model.Level
  * and can be used with various logging frameworks.
  */
 
-fun interface Logger {
+fun interface ILogger {
 
     /**
      * Logs a message with the specified [level], [tag], and [message].
