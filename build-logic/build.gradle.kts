@@ -13,6 +13,11 @@ gradlePlugin {
             id = "lokdroid-maven-central-publishing"
             implementationClass = "MavenCentralPublishingPlugin"
         }
+
+        register("lokdroid-readme-sync") {
+            id = "lokdroid-readme-sync"
+            implementationClass = "ReadmeSyncPlugin"
+        }
     }
 }
 
