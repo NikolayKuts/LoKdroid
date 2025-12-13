@@ -34,7 +34,7 @@ repositories {
 ..
 
 dependencies {
-    implementation("io.github.nikolaykuts:lokdroid:0.0.3-alpha")
+    implementation("io.github.nikolaykuts:lokdroid:0.0.4-alpha")
 }
 ```
 
@@ -43,7 +43,7 @@ dependencies {
 ..
 
 dependencies {
-    implementation 'io.github.nikolaykuts:lokdroid:0.0.3-alpha'
+    implementation 'io.github.nikolaykuts:lokdroid:0.0.4-alpha'
 }
 ```
 

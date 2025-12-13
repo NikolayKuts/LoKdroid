@@ -5,6 +5,7 @@ plugins {
 
     id("lokdroid-documentation-publishing")
     id("lokdroid-maven-central-publishing")
+    id("lokdroid-readme-sync")
 }
 
 android {
