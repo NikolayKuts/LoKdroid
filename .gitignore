@@ -21,3 +21,5 @@ local.properties
 /build-logic/build/
 
 gradle.properties
+
+codex-alt

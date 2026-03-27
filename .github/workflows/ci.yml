@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - development
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+
+      # We intentionally avoid Android SDK-dependent tasks to keep CI light and reliable.
+      # Dokka runs without the Android SDK and validates that the project config is consistent.
+      - name: Verify project (Dokka HTML)
+        run: ./gradlew dokkaHtml --no-daemon --stacktrace
