@@ -9,18 +9,20 @@ val enableIosTargets = providers
     ?.toBooleanStrictOrNull()
     ?: true
 
+val javaVersion = JavaVersion.toVersion(libs.versions.javaVersion.get())
+
 kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = libs.versions.jvmTarget.get()
+                jvmTarget = libs.versions.javaVersion.get()
             }
         }
     }
     jvm("desktop") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = libs.versions.jvmTarget.get()
+                jvmTarget = libs.versions.javaVersion.get()
             }
         }
     }
@@ -41,14 +43,14 @@ kotlin {
 
 android {
     namespace = "com.lib.lokdroid.domain"
-    compileSdk = 34
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 21
+        minSdk = libs.versions.androidLibraryMinSdk.get().toInt()
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 }

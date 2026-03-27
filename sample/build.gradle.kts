@@ -3,14 +3,16 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
+val javaVersion = JavaVersion.toVersion(libs.versions.javaVersion.get())
+
 android {
     namespace = "com.lib.lokdroid"
-    compileSdk = 34
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.lib.lokdroid"
-        minSdk = 25
-        targetSdk = 34
+        minSdk = libs.versions.androidSampleMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -30,11 +32,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
     kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
+        jvmTarget = libs.versions.javaVersion.get()
     }
     buildFeatures {
         compose = true

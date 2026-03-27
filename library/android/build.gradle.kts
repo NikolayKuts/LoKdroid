@@ -8,13 +8,14 @@ plugins {
     id("lokdroid-readme-sync")
 }
 
+val javaVersion = JavaVersion.toVersion(libs.versions.javaVersion.get())
+
 android {
     namespace = "com.library.lokdroid"
-    compileSdk = 34
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 21
-
+        minSdk = libs.versions.androidLibraryMinSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -29,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
     kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
+        jvmTarget = libs.versions.javaVersion.get()
     }
 }
 
