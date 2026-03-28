@@ -55,6 +55,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+        val desktopTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
     }
 }
 

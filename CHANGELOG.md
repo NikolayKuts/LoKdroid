@@ -12,3 +12,9 @@
 - Replaced the old Android-only sample app with `demoApp/androidApp`, `demoApp/desktopApp`, and a shared Compose Multiplatform UI module in `demoApp/sharedUI`.
 - Converted the desktop demo host from a Kotlin Multiplatform module to a plain JVM Compose Desktop module.
 - Removed the Gradle-based `iosApp` module and reserved `demoApp/iosApp` for a future native Xcode host app.
+- Added a desktop `FormatterBuilder` with IDE-friendly caller references and wired it into the Android and desktop demo apps.
+- Aligned the default desktop tag with Android-style caller class resolution.
+- Updated the default desktop console output to `Tag<TAB>[Level] message`.
+- Added desktop tests covering the formatter builder and default tag provider.
+- Raised the Android library minimum SDK to `25`.
+- Bumped the published library version to `0.1.0-alpha` and updated README dependency examples.

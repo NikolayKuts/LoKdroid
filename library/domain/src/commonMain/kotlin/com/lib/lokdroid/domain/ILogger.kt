@@ -19,5 +19,9 @@ fun interface ILogger {
      * @param message The actual message to be logged.
      */
 
-    fun log(level: Level, tag: String, message: String)
+    fun log(
+        level: Level,
+        tag: String,
+        message: String
+    )
 }

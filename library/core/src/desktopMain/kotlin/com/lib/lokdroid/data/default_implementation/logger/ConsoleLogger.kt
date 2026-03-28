@@ -5,7 +5,11 @@ import com.lib.lokdroid.domain.model.Level
 
 actual object ConsoleLogger : ILogger {
 
-    actual override fun log(level: Level, tag: String, message: String) {
-        println("[LoKdroid][$level][$tag] $message")
+    actual override fun log(
+        level: Level,
+        tag: String,
+        message: String
+    ) {
+        println("$tag\t[$level] $message")
     }
 }

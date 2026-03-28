@@ -32,7 +32,6 @@ internal fun StackTraceElement.getShortClassName(): String {
     return className.split('.').last().split("$").first()
 }
 
-
 /**
  * Extension function for [StackTraceElement] that retrieves the long class name.
  *

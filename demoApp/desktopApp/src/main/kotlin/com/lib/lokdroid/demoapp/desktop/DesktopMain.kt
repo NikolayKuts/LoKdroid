@@ -3,10 +3,21 @@ package com.lib.lokdroid.demoapp.desktop
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.lib.lokdroid.core.LoKdroid
+import com.lib.lokdroid.data.default_implementation.FormatterBuilder
 import com.lib.lokdroid.demoapp.sharedui.SharedUiDemoApp
 
 fun main() {
-    LoKdroid.initialize()
+    LoKdroid.initialize(
+        formatter = FormatterBuilder()
+            .withPointer()
+            .space()
+            .withLineReference()
+            .space()
+            .message()
+            .space()
+            .custom(text = "some custom text")
+            .build()
+    )
 
     application {
         Window(

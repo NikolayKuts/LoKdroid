@@ -49,18 +49,18 @@ repositories {
 **Kotlin DSL**
 ```gradle
 dependencies {
-    implementation("io.github.nikolaykuts:lokdroid:0.0.5-alpha")
+    implementation("io.github.nikolaykuts:lokdroid:0.1.0-alpha")
 }
 ```
 
 **Groovy**
 ```gradle
 dependencies {
-    implementation 'io.github.nikolaykuts:lokdroid:0.0.5-alpha'
+    implementation 'io.github.nikolaykuts:lokdroid:0.1.0-alpha'
 }
 ```
 
-For a Kotlin Multiplatform project, put the dependency in `commonMain` when you need the shared API there. Android-specific implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, `FormatterBuilder`, and `FileFormat` are available only from `androidMain`.
+For a Kotlin Multiplatform project, put the dependency in `commonMain` when you need the shared API there. `FormatterBuilder` is available on Android and desktop JVM. Android-specific implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FileFormat` are available only from `androidMain`.
 
 Initialize LoKdroid before logging starts:
 
@@ -108,16 +108,18 @@ logI {
 
 <img width="1545" alt="image" src="https://github.com/user-attachments/assets/1469f691-b73b-437e-b7e0-f6a2d2dcda1a">
 
-### Android Formatter Builder
+### Formatter Builder
 
-On Android, you can configure how a single-line log message is formatted by chaining steps with `FormatterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
+On Android and desktop JVM, you can configure how a single-line log message is formatted by chaining steps with `FormatterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
+
+On desktop JVM, `withLineReference()` inserts an IDE-friendly caller reference like `MainScreen.onClick(MainScreen.kt:42)` directly into the formatted message.
 
 ```kotlin
 LoKdroid.initialize(
     formatter = FormatterBuilder()
         .withPointer()        // adds "--->"
         .space()              // adds a space
-        .withLineReference()  // adds clickable File.kt:123 (Android Studio navigable)
+        .withLineReference()  // Android: File.kt:123, Desktop: Class.method(File.kt:123)
         .space()
         .message()            // MANDATORY: injects your original log message
         .space()
@@ -167,7 +169,12 @@ LoKdroid.initialize(
 
 Platform visibility:
 - `commonMain` sees the shared API, including `LoKdroid`, log functions, `ILogger`, `IFormatter`, `IMessageBuilder`, and `ConsoleLogger`.
-- `androidMain` also sees Android-only implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FormatterBuilder`.
+- `androidMain` also sees Android-only implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FileFormat`.
+- `desktopMain` also sees the desktop `FormatterBuilder` implementation with IDE-friendly line references.
+
+Desktop defaults:
+- The default desktop tag is derived from the caller class name, matching Android tag resolution.
+- The default desktop console output format is `Tag<TAB>[Level] message`.
 
 ## License
 
