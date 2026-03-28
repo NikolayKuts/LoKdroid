@@ -6,10 +6,9 @@ androidTargetSdk = "34"
 androidLibraryMinSdk = "21"
 androidSampleMinSdk = "25"
 javaVersion = "1.8"
-kotlinCompilerExtension = "1.5.9"
 
 agp = "8.5.1"
-kotlin = "1.9.22"
+kotlin = "2.1.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -59,3 +58,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 jetbrainsKotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

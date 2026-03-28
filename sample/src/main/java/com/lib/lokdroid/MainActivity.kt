@@ -38,8 +38,8 @@ class MainActivity : ComponentActivity() {
 //            logger = ConsoleAndFileLogger(fileLogger = FileLogger(context = application))
             /** uncomment this to check logging to remote */
 //            logger = RemoteLogger.getInstance(url = "https://echo.free.beeceptor.com")
-            /** uncomment this to check building Formater */
-//            formatter = FormaterBuilder()
+            /** uncomment this to check building Formatter */
+//            formatter = FormatterBuilder()
 //                .withPointer()
 //                .space()
 //                .withLineReference()
@@ -56,11 +56,11 @@ class MainActivity : ComponentActivity() {
 //        LoKdroid.initialize(
 //            minLevel = Level.Debug,
 //            logger = { level: Level, tag: String, message: String -> /** your logic */ },
-//            formatter = { message -> "return formatted message: $message" }, /** or use FormaterBuilder */
+//            formatter = { message -> "return formatted message: $message" }, /** or use FormatterBuilder */
 //            tagProvider = { "custom tag" },
-//            logBuilderProvider = {
-//                /** provide your custom ILogBuilder */
-//                object : com.lib.lokdroid.domain.ILogBuilder {
+//            messageBuilderFactory = {
+//                /** provide your custom IMessageBuilder */
+//                object : com.lib.lokdroid.domain.IMessageBuilder {
 //
 //                    override fun build(): String {
 //                        return "build your string"

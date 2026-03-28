@@ -24,5 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "LoKdroid"
 include(":sample")
-include(":library:android")
+include(":library:core")
 include(":library:domain")

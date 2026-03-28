@@ -2,28 +2,23 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nikolaykuts/lokdroid)](https://central.sonatype.com/artifact/io.github.nikolaykuts/lokdroid)
 
-LoKdroid is a comprehensive logging library designed for Android development, offering a flexible and customizable solution for managing logs across your Android applications.
+LoKdroid is a Kotlin Multiplatform logging library with a shared core API and Android-specific extensions for file and Logcat-oriented logging.
 
 ## Features
 
-- **Customizable Logging**: Provides options to define custom log formats, tags, and builders.
-- **Default Implementations**: Comes with default implementations for log formatting, tag generation, and log building to simplify the setup process.
-- **Android Studio Logcat import format support**: Supports saving logs in a format suitable for importing into Android Studio Logcat.
+- **Shared logging API**: Use the same `LoKdroid`, log functions, and builder DSL from common code.
+- **Multiplatform targets**: Core logging works on Android, desktop JVM, and iOS.
+- **Customizable formatting and tagging**: Override formatter, logger, tag provider, and message builder factory.
+- **Android-specific extensions**: File logging, Logcat-formatted files, and formatter DSL remain available on Android.
 
 ## Documentation
 View **[KDoc](https://nikolaykuts.github.io/LoKdroid/)**
 
 ## Getting Started
 
-To integrate LoKdroid into your Android project, follow these steps:
-
-### 1. Add the Library to Your Project
-
-Include the library in your project by adding it to your dependencies:
+Add LoKdroid to your project:
 
 ```gradle
-..
-
 repositories {
     mavenCentral()
 }
@@ -31,8 +26,6 @@ repositories {
 
 **Kotlin DSL**
 ```gradle
-..
-
 dependencies {
     implementation("io.github.nikolaykuts:lokdroid:0.0.5-alpha")
 }
@@ -40,27 +33,18 @@ dependencies {
 
 **Groovy**
 ```gradle
-..
-
 dependencies {
     implementation 'io.github.nikolaykuts:lokdroid:0.0.5-alpha'
 }
 ```
 
-### 2. Initialize the Library
+For a Kotlin Multiplatform project, put the dependency in `commonMain` when you need the shared API there. Android-specific implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, `FormatterBuilder`, and `FileFormat` are available only from `androidMain`.
 
-Initialize LoKdroid in your `Application` class:
+Initialize LoKdroid before logging starts:
 
 ```kotlin
-class MyApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-
-        LoKdroid.initialize()
-    }
-}
+LoKdroid.initialize()
 ```
-The initialization function must be called before logging begins.
 
 ## Usage
 
@@ -77,7 +61,7 @@ logE(message = "some message")
 <img width="1551" alt="image" src="https://github.com/user-attachments/assets/92a2e541-ef81-4e22-a6fc-82cbfe53d541">
 
 
-### Multiple logging via ILogBuilder
+### Multiple logging via IMessageBuilder
 
 ```kotlin
 
@@ -96,13 +80,13 @@ logI {
 
 <img width="1545" alt="image" src="https://github.com/user-attachments/assets/1469f691-b73b-437e-b7e0-f6a2d2dcda1a">
 
-### Formatter builder (chain DSL)
+### Android Formatter Builder
 
-You can configure how a single-line log message is formatted by chaining steps with `FormaterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
+On Android, you can configure how a single-line log message is formatted by chaining steps with `FormatterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
 
 ```kotlin
 LoKdroid.initialize(
-    formatter = FormaterBuilder()
+    formatter = FormatterBuilder()
         .withPointer()        // adds "--->"
         .space()              // adds a space
         .withLineReference()  // adds clickable File.kt:123 (Android Studio navigable)
@@ -114,25 +98,25 @@ LoKdroid.initialize(
 )
 ```
 
-## Default implementations
+## Default Initialization
 
-#### Default initialising
 ```kotlin
 fun initialize(
     minLevel: Level = Level.Verbose,
     logger: ILogger = ConsoleLogger,
     formatter: IFormatter = IFormatter { message -> message },
     tagProvider: () -> String = { TagProvider.getTag() },
-    logBuilderProvider: ILogBuilderProvider = LogBuilderProvider()
+    messageBuilderFactory: () -> IMessageBuilder = { MessageBuilder() }
 )
 ```
-#### There are several implementations for targeted logging.
-* _**ConsoleLogger**_ - logs messages to the Android console.
-* _**FileLogger**_ - writes log messages to a specified file. *Supports a format suitable for import through Android Studio.*
-* _**ConsoleAndFileLogger**_ - writes messages to both a file and the console.
-* _**RemoteLogger**_ - sends log messages to a remote server.
 
-## Customising
+Available implementations:
+- `ConsoleLogger` is available on Android, desktop JVM, and iOS.
+- `FileLogger` is Android-only and writes messages to a file. It supports Android Studio Logcat import format.
+- `ConsoleAndFileLogger` is Android-only.
+- `RemoteLogger` is currently Android-only.
+
+## Customizing
 ```kotlin
 /** custom implementation */
 
@@ -141,20 +125,21 @@ LoKdroid.initialize(
     logger = { level: Level, tag: String, message: String -> /** your logic */ },
     formatter = { message -> "return formatted message: $message" },
     tagProvider = { "custom tag" },
-    logBuilderProvider = {
-        /** provide your custom ILogBuilder */
-        object : ILogBuilder {
-            
+    messageBuilderFactory = {
+        object : IMessageBuilder {
             override fun build(): String = "build your string"
-            
+
             override operator fun String.invoke() {
-                /** use this block to build multiple log lines */
+                // use this block to build multiple message lines
             }
         }
     }
 )
 ```
-For trying customising, check the [`MainActivity.kt`](https://github.com/NikolayKuts/LoKdroid/blob/development/sample/src/main/java/com/lib/lokdroid/MainActivity.kt) file in the `sample` module.
+
+Platform visibility:
+- `commonMain` sees the shared API, including `LoKdroid`, log functions, `ILogger`, `IFormatter`, `IMessageBuilder`, and `ConsoleLogger`.
+- `androidMain` also sees Android-only implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FormatterBuilder`.
 
 ## License
 
