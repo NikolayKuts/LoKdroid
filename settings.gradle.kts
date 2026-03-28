@@ -23,6 +23,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "LoKdroid"
-include(":sample")
-include(":library:core")
-include(":library:domain")
+include(":androidApp")
+include(":sharedUI")
+include(":desktopApp")
+include(":core")
+include(":domain")
+
+project(":androidApp").projectDir = file("demoApp/androidApp")
+project(":sharedUI").projectDir = file("demoApp/sharedUI")
+project(":desktopApp").projectDir = file("demoApp/desktopApp")
+project(":core").projectDir = file("library/core")
+project(":domain").projectDir = file("library/domain")

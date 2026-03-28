@@ -40,7 +40,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":library:domain"))
+                api(project(":domain"))
             }
         }
         val androidMain by getting {

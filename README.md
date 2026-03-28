@@ -10,9 +10,31 @@ LoKdroid is a Kotlin Multiplatform logging library with a shared core API and An
 - **Multiplatform targets**: Core logging works on Android, desktop JVM, and iOS.
 - **Customizable formatting and tagging**: Override formatter, logger, tag provider, and message builder factory.
 - **Android-specific extensions**: File logging, Logcat-formatted files, and formatter DSL remain available on Android.
+- **Compose demo apps**: The repository includes Android and desktop demo hosts backed by a shared Compose Multiplatform UI module.
 
 ## Documentation
 View **[KDoc](https://nikolaykuts.github.io/LoKdroid/)**
+
+## Repository Layout
+
+The repository uses flat Gradle project paths while keeping grouped folders on disk:
+
+```text
+LoKdroid/
+├── library/
+│   ├── core/       -> Gradle module :core
+│   └── domain/     -> Gradle module :domain
+└── demoApp/
+    ├── androidApp/ -> Gradle module :androidApp
+    ├── desktopApp/ -> Gradle module :desktopApp
+    ├── sharedUI/   -> Gradle module :sharedUI
+    └── iosApp/     -> native iOS host placeholder, not part of the Gradle build
+```
+
+Notes:
+- `library/` and `demoApp/` are directories for organization, not Gradle modules.
+- `:sharedUI` contains the shared Compose Multiplatform screens used by the Android and desktop demo hosts.
+- `demoApp/iosApp` is reserved for a future native Xcode app. iOS compilation currently happens through `:sharedUI`.
 
 ## Getting Started
 
@@ -45,6 +67,12 @@ Initialize LoKdroid before logging starts:
 ```kotlin
 LoKdroid.initialize()
 ```
+
+## Running Demo Apps
+
+- Android: run the `androidApp` application module from Android Studio.
+- Desktop: run `./gradlew :desktopApp:run`
+- iOS: create a native Xcode host in `demoApp/iosApp` and embed Kotlin output from shared modules as needed.
 
 ## Usage
 
