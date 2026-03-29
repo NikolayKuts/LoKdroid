@@ -32,9 +32,15 @@ kotlin {
         }
     }
     if (enableIosTargets) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
+        iosX64().binaries.framework {
+            baseName = "sharedUI"
+        }
+        iosArm64().binaries.framework {
+            baseName = "sharedUI"
+        }
+        iosSimulatorArm64().binaries.framework {
+            baseName = "sharedUI"
+        }
     }
 
     sourceSets {

@@ -24,15 +24,15 @@ class MainActivity : ComponentActivity() {
             /** uncomment this to check logging to remote */
 //            logger = RemoteLogger.getInstance(url = "https://echo.free.beeceptor.com")
             /** uncomment this to check building Formatter */
-            formatter = FormatterBuilder()
-                .withPointer()
-                .space()
-                .withLineReference()
-                .space()
-                .message()
-                .space()
-                .custom(text = "some custom text")
-                .build()
+//            formatter = FormatterBuilder()
+//                .withPointer()
+//                .space()
+//                .withLineReference()
+//                .space()
+//                .message()
+//                .space()
+//                .custom(text = "some custom text")
+//                .build()
         )
 
         logI(message = "some message")
@@ -57,6 +57,14 @@ class MainActivity : ComponentActivity() {
 //                }
 //            }
 //        )
+
+        logV {
+            "some Error"(E)
+            "some Info"(I)
+            "some Debug"(D)
+            "some Verbose"(V)
+            "some Warn"(W)
+        }
 
         setContent {
             SharedUiDemoApp()

@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.lib.lokdroid.core.logV
 
 private val DemoData = listOf(
     "first",
@@ -30,6 +31,15 @@ fun SharedUiDemoApp(
     data: List<String> = DemoData,
 ) {
     val items = data.ifEmpty { listOf("No demo data") }
+
+    logV {
+        "multi log"()
+        "some Error"(E)
+        "some Info"(I)
+        "some Debug"(D)
+        "some Verbose"(V)
+        "some Warn"(W)
+    }
 
     SharedUiTheme {
         Surface(

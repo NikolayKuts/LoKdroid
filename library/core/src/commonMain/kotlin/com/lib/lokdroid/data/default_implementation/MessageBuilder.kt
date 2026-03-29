@@ -1,6 +1,7 @@
 package com.lib.lokdroid.data.default_implementation
 
 import com.lib.lokdroid.domain.IMessageBuilder
+import com.lib.lokdroid.domain.model.Level
 
 /**
  * Default implementation of [IMessageBuilder] providing a simple DSL-based message composition.
@@ -13,11 +14,11 @@ class MessageBuilder : IMessageBuilder {
 
     private val contentBuilder = StringBuilder()
 
-    override fun String.invoke() {
+    override fun String.invoke(level: Level?) {
         if (contentBuilder.isEmpty()) {
             contentBuilder.append(this)
         } else {
-            contentBuilder.append("\n\t-> $this")
+            contentBuilder.append("\n\t${level.toEmojiOrEmpty()} -> $this")
         }
     }
 

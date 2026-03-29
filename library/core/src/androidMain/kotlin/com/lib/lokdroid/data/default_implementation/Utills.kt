@@ -23,52 +23,32 @@ internal fun formatDate(timestamp: Long, pattern: String = LOG_DATE_PATTERN): St
 }
 
 /**
- * Extension function for [StackTraceElement] that retrieves the short class name.
- *
- * The short class name is the last part of the fully qualified class name (after the last dot).
- * @return The short name of the class from the [StackTraceElement].
- */
-internal fun StackTraceElement.getShortClassName(): String {
-    return className.split('.').last().split("$").first()
-}
-
-/**
- * Extension function for [StackTraceElement] that retrieves the long class name.
- *
- * The long class name is the last part of the fully qualified class name (after the last dot), but
- * it removes any numeric identifiers of anonymous or lambda classes (e.g., `$1`, `$2`).
- *
- * @return The long class name with any `$` and numeric suffixes removed.
- */
-internal fun StackTraceElement.getLongClassName(): String {
-    return className.split('.')
-        .last()
-        .replace(
-            regex = "(\\$\\d+)+".toRegex(),
-            replacement = ""
-        )
-}
-
-/**
- * Retrieves the relevant [StackTraceElement] that references the point in code where the logger was called.
+ * Retrieves the relevant call site that references the point in code where the logger was called.
  *
  * This method looks through the current thread's stack trace to find the last occurrence of the class
- * related to the logger ([LoKdroid] class), then returns the element that is two steps ahead of that
+ * related to the logger ([LoKdroid] class), then returns the call site that is two steps ahead of that
  * occurrence. This is typically the location in the code where the logging actually took place.
  *
- * @return The [StackTraceElement] pointing to the code reference, or `null` if it cannot be determined.
+ * @return The normalized [CallSite] pointing to the code reference, or `null` if it cannot be determined.
  */
-internal fun getTargetReferenceStackTraceElement(): StackTraceElement? {
+internal actual fun getTargetReferenceCallSite(): CallSite? {
     val stackTrace = Thread.currentThread().stackTrace
     val stackTraceElement = stackTrace.lastOrNull {
         it.className.contains(LoKdroid::class.simpleName ?: "UnknownClass")
     }
     val stackTraceElementIndex = stackTrace.indexOf(stackTraceElement)
     val stepToReferenceElement = 2
-    val referenceElement = stackTrace[stackTraceElementIndex + stepToReferenceElement]
+    if (stackTraceElementIndex == -1) return null
 
-    return referenceElement
+    val referenceElement = stackTrace.getOrNull(stackTraceElementIndex + stepToReferenceElement) ?: return null
+
+    return referenceElement.toCallSite()
 }
+
+/**
+ * Returns the Android-specific compact caller reference used by [FormatterBuilder].
+ */
+internal actual fun getFormattedLineReference(): String = getLineReference()
 
 /**
  * Extension function for `Array<[StackTraceElement]?>?` that logs the contents of the stack trace.
@@ -81,7 +61,7 @@ internal fun getTargetReferenceStackTraceElement(): StackTraceElement? {
  */
 internal fun Array<StackTraceElement?>?.printContent(tag: String) {
     if (this == null) {
-        Log.d(tag,"stackTraceElements: null")
+        Log.d(tag, "stackTraceElements: null")
         return
     }
 
@@ -90,3 +70,13 @@ internal fun Array<StackTraceElement?>?.printContent(tag: String) {
 
     Log.d(tag, "stackTraceElements: - size: ${this.size} -> $stackTraceContent")
 }
+
+/**
+ * Converts a JVM [StackTraceElement] into the normalized [CallSite] model used by shared code.
+ */
+private fun StackTraceElement.toCallSite(): CallSite = CallSite(
+    className = className,
+    methodName = methodName,
+    fileName = fileName,
+    lineNumber = lineNumber.takeIf { it >= 0 },
+)

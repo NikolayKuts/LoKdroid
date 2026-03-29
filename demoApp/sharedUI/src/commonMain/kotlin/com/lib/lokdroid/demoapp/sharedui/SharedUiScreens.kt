@@ -291,7 +291,7 @@ private fun LogActionsRow(actions: List<LogAction>) {
 
 private fun invokeMultipleLog(level: Level, data: List<String>) {
     log(level = level) {
-        "Multiple log"()
+        "Multiple log"(level)
         data.forEach { value -> value() }
     }
 }
