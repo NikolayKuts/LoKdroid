@@ -2,28 +2,47 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nikolaykuts/lokdroid)](https://central.sonatype.com/artifact/io.github.nikolaykuts/lokdroid)
 
-LoKdroid is a comprehensive logging library designed for Android development, offering a flexible and customizable solution for managing logs across your Android applications.
+LoKdroid is a Kotlin Multiplatform logging library with a shared core API for Android, desktop JVM, and iOS, plus Android-specific extensions for file and Logcat-oriented logging.
 
 ## Features
 
-- **Customizable Logging**: Provides options to define custom log formats, tags, and builders.
-- **Default Implementations**: Comes with default implementations for log formatting, tag generation, and log building to simplify the setup process.
-- **Android Studio Logcat import format support**: Supports saving logs in a format suitable for importing into Android Studio Logcat.
+- **Shared logging API**: Use the same `LoKdroid`, log functions, and builder DSL from common code.
+- **Multiplatform targets**: Core logging works on Android, desktop JVM, and iOS.
+- **Shared formatter DSL**: `FormatterBuilder` is available from shared code and formats logs on all three platforms.
+- **Customizable formatting and tagging**: Override formatter, logger, tag provider, and message builder factory.
+- **Platform-native console behavior**: Android uses `Logcat`; desktop JVM and iOS use formatted console output with emoji level markers.
+- **Android-specific extensions**: File logging, Logcat-formatted files, and remote logging remain available on Android.
+- **Compose demo apps**: The repository includes Android, desktop, and native iOS demo hosts backed by a shared Compose Multiplatform UI module.
 
 ## Documentation
 View **[KDoc](https://nikolaykuts.github.io/LoKdroid/)**
 
+## Repository Layout
+
+The repository uses flat Gradle project paths while keeping grouped folders on disk:
+
+```text
+LoKdroid/
+├── library/
+│   ├── core/       -> Gradle module :core
+│   └── domain/     -> Gradle module :domain
+└── demoApp/
+    ├── androidApp/ -> Gradle module :androidApp
+    ├── desktopApp/ -> Gradle module :desktopApp
+    ├── sharedUI/   -> Gradle module :sharedUI
+    └── iosApp/     -> native iOS Xcode host app, not part of the Gradle build
+```
+
+Notes:
+- `library/` and `demoApp/` are directories for organization, not Gradle modules.
+- `:sharedUI` contains the shared Compose Multiplatform screens used by the Android, desktop, and iOS demo hosts.
+- `demoApp/iosApp` is a native Xcode application that imports the `sharedUI` framework and hosts Compose UI through `MainViewController`.
+
 ## Getting Started
 
-To integrate LoKdroid into your Android project, follow these steps:
-
-### 1. Add the Library to Your Project
-
-Include the library in your project by adding it to your dependencies:
+Add LoKdroid to your project:
 
 ```gradle
-..
-
 repositories {
     mavenCentral()
 }
@@ -31,36 +50,59 @@ repositories {
 
 **Kotlin DSL**
 ```gradle
-..
-
 dependencies {
-    implementation("io.github.nikolaykuts:lokdroid:0.0.5-alpha")
+    implementation("io.github.nikolaykuts:lokdroid:0.1.0-alpha")
 }
 ```
 
 **Groovy**
 ```gradle
-..
-
 dependencies {
-    implementation 'io.github.nikolaykuts:lokdroid:0.0.5-alpha'
+    implementation 'io.github.nikolaykuts:lokdroid:0.1.0-alpha'
 }
 ```
 
-### 2. Initialize the Library
+For a Kotlin Multiplatform project, put the dependency in `commonMain` when you need the shared API there. `FormatterBuilder` is part of the shared API and can be used from code that targets Android, desktop JVM, and iOS. Android-specific implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FileFormat` are available only from `androidMain`.
 
-Initialize LoKdroid in your `Application` class:
+Initialize LoKdroid before logging starts:
 
 ```kotlin
-class MyApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
+LoKdroid.initialize()
+```
 
-        LoKdroid.initialize()
+## Running Demo Apps
+
+- Android: run the `androidApp` application module from Android Studio.
+- Desktop: run `./gradlew :desktopApp:run`
+- iOS: open `demoApp/iosApp/iosApp.xcodeproj` in Xcode and run the `iosApp` scheme.
+
+### iOS Demo Host Setup
+
+The repository already contains a native iOS host app under `demoApp/iosApp`.
+
+- The shared Kotlin UI is exposed from `:sharedUI` as the `sharedUI` framework.
+- The Swift app initializes logging through `MainViewControllerKt.initializeLoKdroid()`.
+- The root Compose screen is embedded through `MainViewControllerKt.MainViewController()`.
+
+Minimal integration looks like this on the Swift side:
+
+```swift
+import SwiftUI
+import sharedUI
+
+@main
+struct iosAppApp: App {
+    init() {
+        MainViewControllerKt.initializeLoKdroid()
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            ComposeRootView()
+        }
     }
 }
 ```
-The initialization function must be called before logging begins.
 
 ## Usage
 
@@ -77,7 +119,7 @@ logE(message = "some message")
 <img width="1551" alt="image" src="https://github.com/user-attachments/assets/92a2e541-ef81-4e22-a6fc-82cbfe53d541">
 
 
-### Multiple logging via ILogBuilder
+### Multiple logging via IMessageBuilder
 
 ```kotlin
 
@@ -96,16 +138,55 @@ logI {
 
 <img width="1545" alt="image" src="https://github.com/user-attachments/assets/1469f691-b73b-437e-b7e0-f6a2d2dcda1a">
 
-### Formatter builder (chain DSL)
+### Multiple logging with per-line levels
 
-You can configure how a single-line log message is formatted by chaining steps with `FormaterBuilder` and passing the built `IFormatter` into `LoKdroid.initialize`.
+Inside the `IMessageBuilder` DSL, the string extension function accepts an optional `Level`.
+The default `MessageBuilder` uses that value to prepend an emoji marker for the corresponding line.
+
+Shortcuts available inside the builder:
+- `V` for `Level.Verbose`
+- `D` for `Level.Debug`
+- `I` for `Level.Info`
+- `W` for `Level.Warn`
+- `E` for `Level.Error`
+
+```kotlin
+logV {
+    "multi log"()
+    "some Error"(E)
+    "some Info"(I)
+    "some Debug"(D)
+    "some Verbose"(V)
+    "some Warn"(W)
+}
+```
+
+When used with the `FormatterBuilder` configuration from the next section, the output can look like this:
+
+```text
+DesktopMainKt    [Verbose] ⬜ --->    DesktopMainKt.invoke(DesktopMain.kt:24) multi log
+    🟥 -> some Error
+    🟩 -> some Info
+    🟦 -> some Debug
+    ⬜ -> some Verbose
+    🟨 -> some Warn some custom text
+```
+
+### Formatter Builder
+
+`FormatterBuilder` is shared and can be configured the same way for Android, desktop JVM, and iOS by passing the built `IFormatter` into `LoKdroid.initialize`.
+
+Platform behavior for `withLineReference()`:
+- Android: inserts a compact reference like `MainScreen.kt:42`
+- Desktop JVM: inserts a stack-frame-style reference like `MainScreen.onClick(MainScreen.kt:42)`
+- iOS: inserts the same stack-frame-style reference format as desktop
 
 ```kotlin
 LoKdroid.initialize(
-    formatter = FormaterBuilder()
+    formatter = FormatterBuilder()
         .withPointer()        // adds "--->"
         .space()              // adds a space
-        .withLineReference()  // adds clickable File.kt:123 (Android Studio navigable)
+        .withLineReference()  // Android: File.kt:123, Desktop/iOS: Class.method(File.kt:123)
         .space()
         .message()            // MANDATORY: injects your original log message
         .space()
@@ -114,25 +195,37 @@ LoKdroid.initialize(
 )
 ```
 
-## Default implementations
+### Default Console Behavior
 
-#### Default initialising
+- Android `ConsoleLogger` writes through the platform logging system, so logs appear in Logcat with Android priorities.
+- Desktop JVM and iOS `ConsoleLogger` write formatted lines to standard output using the pattern `Tag<TAB>[Level] emoji message`.
+- The default desktop and iOS level markers use square emoji blocks: `⬜`, `🟦`, `🟩`, `🟨`, `🟥`.
+
+Desktop and iOS example output:
+
+```text
+SharedUiScreensKt    [Debug] 🟦 --->    SharedUiScreensKt.invokeMultipleLog(SharedUiScreens.kt:293) Multiple log
+```
+
+## Default Initialization
+
 ```kotlin
 fun initialize(
     minLevel: Level = Level.Verbose,
     logger: ILogger = ConsoleLogger,
     formatter: IFormatter = IFormatter { message -> message },
     tagProvider: () -> String = { TagProvider.getTag() },
-    logBuilderProvider: ILogBuilderProvider = LogBuilderProvider()
+    messageBuilderFactory: () -> IMessageBuilder = { MessageBuilder() }
 )
 ```
-#### There are several implementations for targeted logging.
-* _**ConsoleLogger**_ - logs messages to the Android console.
-* _**FileLogger**_ - writes log messages to a specified file. *Supports a format suitable for import through Android Studio.*
-* _**ConsoleAndFileLogger**_ - writes messages to both a file and the console.
-* _**RemoteLogger**_ - sends log messages to a remote server.
 
-## Customising
+Available implementations:
+- `ConsoleLogger` is available on Android, desktop JVM, and iOS.
+- `FileLogger` is Android-only and writes messages to a file. It supports Android Studio Logcat import format.
+- `ConsoleAndFileLogger` is Android-only.
+- `RemoteLogger` is currently Android-only.
+
+## Customizing
 ```kotlin
 /** custom implementation */
 
@@ -141,20 +234,27 @@ LoKdroid.initialize(
     logger = { level: Level, tag: String, message: String -> /** your logic */ },
     formatter = { message -> "return formatted message: $message" },
     tagProvider = { "custom tag" },
-    logBuilderProvider = {
-        /** provide your custom ILogBuilder */
-        object : ILogBuilder {
-            
+    messageBuilderFactory = {
+        object : IMessageBuilder {
             override fun build(): String = "build your string"
-            
-            override operator fun String.invoke() {
-                /** use this block to build multiple log lines */
+
+            override operator fun String.invoke(level: Level?) {
+                // use this block to build multiple message lines
             }
         }
     }
 )
 ```
-For trying customising, check the [`MainActivity.kt`](https://github.com/NikolayKuts/LoKdroid/blob/development/sample/src/main/java/com/lib/lokdroid/MainActivity.kt) file in the `sample` module.
+
+Platform visibility:
+- `commonMain` sees the shared API, including `LoKdroid`, log functions, `ILogger`, `IFormatter`, `IMessageBuilder`, `ConsoleLogger`, and `FormatterBuilder`.
+- `androidMain` also sees Android-only implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FileFormat`.
+- `desktopMain` and `iosMain` use the same shared API surface and platform-specific console behavior under the hood.
+
+Console defaults:
+- The default desktop tag is derived from the caller class name, matching Android-style tag resolution.
+- iOS uses the same console output shape as desktop.
+- Top-level Kotlin functions on desktop and iOS are tagged with their synthetic file owner, for example `SharedUiScreensKt`.
 
 ## License
 

@@ -48,7 +48,7 @@ jobs:
 
       - name: Sync README version with libs.versions.toml
         run: |
-          ./gradlew :library:syncReadmeVersion
+          ./gradlew :core:syncReadmeVersion
 
       - name: Commit and push README update if changed
         id: commit_readme

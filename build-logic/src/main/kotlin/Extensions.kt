@@ -27,7 +27,7 @@ fun Project.getLibsLibrary(alias: String): LibsLibrary {
 }
 
 fun MinimalExternalModuleDependency.toLibsLibrary(): LibsLibrary = LibsLibrary(
-    groupId = group ?: throw IllegalArgumentException("LibsLibrary groupId is null"),
-    artifactId = module.name ?: throw IllegalArgumentException("LibsLibrary artifactId is null"),
+    groupId = group,
+    artifactId = module.name,
     version = version ?: throw IllegalArgumentException("LibsLibrary version is null")
 )

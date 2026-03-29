@@ -14,7 +14,7 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
@@ -23,5 +23,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "LoKdroid"
-include(":sample")
-include(":library")
+include(":androidApp")
+include(":sharedUI")
+include(":desktopApp")
+include(":core")
+include(":domain")
+
+project(":androidApp").projectDir = file("demoApp/androidApp")
+project(":sharedUI").projectDir = file("demoApp/sharedUI")
+project(":desktopApp").projectDir = file("demoApp/desktopApp")
+project(":core").projectDir = file("library/core")
+project(":domain").projectDir = file("library/domain")

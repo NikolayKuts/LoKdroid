@@ -9,9 +9,11 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+**/build/
 /captures
 .externalNativeBuild
 .cxx
+.kotlin/
 local.properties
 .idea/
 *.iws
@@ -21,3 +23,5 @@ local.properties
 /build-logic/build/
 
 gradle.properties
+
+codex-alt
