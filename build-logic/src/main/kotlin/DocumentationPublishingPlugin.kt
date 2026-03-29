@@ -22,8 +22,6 @@ class DocumentationPublishingPlugin : Plugin<Project> {
                     )
                 )
             }
-
-            dependsOn("publishToMavenLocal")
         }
     }
 }
