@@ -1,5 +1,4 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -10,6 +9,7 @@ class MavenCentralPublishingPlugin : Plugin<Project> {
 
         private const val VANNIKTECH_MAVEN_PUBLISH_PLUGIN_ID = "com.vanniktech.maven.publish"
         private const val LOKDROID_LIBRARY_ALIAS = "lokdroid"
+        private const val CORE_PROJECT_NAME = "core"
 
         private const val LOKDROID_LIBRARY_NAME = "LoKdroid"
         private const val DESCRIPTION = "A library for logging in Android applications"
@@ -33,6 +33,11 @@ class MavenCentralPublishingPlugin : Plugin<Project> {
 
             extensions.configure<MavenPublishBaseExtension> {
                 val library = getLibsLibrary(alias = LOKDROID_LIBRARY_ALIAS)
+                val artifactId = if (project.name == CORE_PROJECT_NAME) {
+                    library.artifactId
+                } else {
+                    "${library.artifactId}-${project.name}"
+                }
 
                 library.run {
                     println("retrieved libsLibrary { groupId: $groupId, artifactId: $artifactId, version: $version }")
@@ -40,7 +45,7 @@ class MavenCentralPublishingPlugin : Plugin<Project> {
 
                 coordinates(
                     groupId = library.groupId,
-                    artifactId = library.artifactId,
+                    artifactId = artifactId,
                     version = library.version
                 )
 
@@ -70,7 +75,7 @@ class MavenCentralPublishingPlugin : Plugin<Project> {
                 }
 
                 // Configure publishing to Maven Central
-                publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+                publishToMavenCentral()
 
                 // Enable GPG signing for all publications
                 signAllPublications()
