@@ -1,0 +1,11 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:core
+com.lib.lokdroid.core
+com.lib.lokdroid.data.default_implementation
+com.lib.lokdroid.data.default_implementation.logger
+com.lib.lokdroid.model
+module:domain
+com.lib.lokdroid.domain
+com.lib.lokdroid.domain.model
