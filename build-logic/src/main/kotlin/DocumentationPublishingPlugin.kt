@@ -10,7 +10,7 @@ class DocumentationPublishingPlugin : Plugin<Project> {
     companion object {
         private const val DOKKA_PLUGIN_ID = "org.jetbrains.dokka"
         private const val DOKKA_HTML_TASK = "dokkaHtml"
-        private const val DOKKA_HTML_COLLECTOR_TASK = "dokkaHtmlCollector"
+        private const val DOKKA_HTML_MULTI_MODULE_TASK = "dokkaHtmlMultiModule"
         private const val ASSEMBLE_DOCS_SITE_TASK = "assembleDocsSite"
     }
 
@@ -43,10 +43,10 @@ class DocumentationPublishingPlugin : Plugin<Project> {
 
         tasks.register<Sync>(ASSEMBLE_DOCS_SITE_TASK) {
             group = "documentation"
-            description = "Assembles a GitHub Pages site with aggregated Dokka output."
+            description = "Assembles a GitHub Pages site with multi-module Dokka output."
 
-            dependsOn(DOKKA_HTML_COLLECTOR_TASK)
-            from(layout.buildDirectory.dir("dokka/htmlCollector"))
+            dependsOn(DOKKA_HTML_MULTI_MODULE_TASK)
+            from(layout.buildDirectory.dir("dokka/htmlMultiModule"))
             into(docsSiteDir)
         }
     }
