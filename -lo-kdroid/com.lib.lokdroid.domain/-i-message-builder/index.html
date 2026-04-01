@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>IMessageBuilder</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            LoKdroid
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":domain:dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="LoKdroid::com.lib.lokdroid.domain/IMessageBuilder///PointingToDeclaration//-1778659594">
+  <div class="breadcrumbs"><a href="../../../index.html">LoKdroid</a><span class="delimiter">/</span><a href="../index.html">com.lib.lokdroid.domain</a><span class="delimiter">/</span><span class="current">IMessageBuilder</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>IMessage</span><wbr></wbr><span><span>Builder</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">IMessageBuilder</a></div><p class="paragraph">An interface for building messages using a simple DSL.</p><p class="paragraph">Alongside <a href="build.html">build</a> and the string invocation operator, this interface exposes shorthand properties for commonly used log levels. These are intended to be passed into <a href="invoke.html">String.invoke</a> inside the builder block:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">logI {<br>    &quot;Header&quot;()<br>    &quot;Something failed&quot;(E)<br>    &quot;Extra details&quot;(D)<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../../com.lib.lokdroid.data.default_implementation/-message-builder/index.html">MessageBuilder</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1206418158%2FProperties%2F-1778659594" anchor-label="D" id="-1206418158%2FProperties%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d.html"><span><span>D</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1206418158%2FProperties%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="-d.html">D</a><span class="token operator">: </span><a href="../../com.lib.lokdroid.domain.model/-level/index.html">Level</a></div><div class="brief "><p class="paragraph">Shorthand for <a href="../../com.lib.lokdroid.domain.model/-level/-debug/index.html">Level.Debug</a> when tagging a DSL line with the debug level.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1175398351%2FProperties%2F-1778659594" anchor-label="E" id="-1175398351%2FProperties%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e.html"><span><span>E</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1175398351%2FProperties%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="-e.html">E</a><span class="token operator">: </span><a href="../../com.lib.lokdroid.domain.model/-level/index.html">Level</a></div><div class="brief "><p class="paragraph">Shorthand for <a href="../../com.lib.lokdroid.domain.model/-level/-error/index.html">Level.Error</a> when tagging a DSL line with the error level.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1051319123%2FProperties%2F-1778659594" anchor-label="I" id="-1051319123%2FProperties%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-i.html"><span><span>I</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1051319123%2FProperties%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="-i.html">I</a><span class="token operator">: </span><a href="../../com.lib.lokdroid.domain.model/-level/index.html">Level</a></div><div class="brief "><p class="paragraph">Shorthand for <a href="../../com.lib.lokdroid.domain.model/-level/-info/index.html">Level.Info</a> when tagging a DSL line with the info level.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-648061632%2FProperties%2F-1778659594" anchor-label="V" id="-648061632%2FProperties%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v.html"><span><span>V</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-648061632%2FProperties%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="-v.html">V</a><span class="token operator">: </span><a href="../../com.lib.lokdroid.domain.model/-level/index.html">Level</a></div><div class="brief "><p class="paragraph">Shorthand for <a href="../../com.lib.lokdroid.domain.model/-level/-verbose/index.html">Level.Verbose</a> when tagging a DSL line with the verbose level.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-617041825%2FProperties%2F-1778659594" anchor-label="W" id="-617041825%2FProperties%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-w.html"><span><span>W</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-617041825%2FProperties%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="-w.html">W</a><span class="token operator">: </span><a href="../../com.lib.lokdroid.domain.model/-level/index.html">Level</a></div><div class="brief "><p class="paragraph">Shorthand for <a href="../../com.lib.lokdroid.domain.model/-level/-warn/index.html">Level.Warn</a> when tagging a DSL line with the warning level.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1971327576%2FFunctions%2F-1778659594" anchor-label="build" id="-1971327576%2FFunctions%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="build.html"><span><span>build</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1971327576%2FFunctions%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Builds and returns the final message as a string.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-111140344%2FFunctions%2F-1778659594" anchor-label="invoke" id="-111140344%2FFunctions%2F-1778659594" data-filterable-set=":domain:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":domain:dokkaHtml/commonMain" data-filterable-set=":domain:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="invoke.html"><span><span>invoke</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-111140344%2FFunctions%2F-1778659594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":domain:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">.</span><a href="invoke.html"><span class="token function">invoke</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">level<span class="token operator">: </span><a href="../../com.lib.lokdroid.domain.model/-level/index.html">Level</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a new message line to this builder via a DSL-style string invocation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2026 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
