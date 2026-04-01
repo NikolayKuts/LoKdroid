@@ -1,15 +1,24 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.Sync
+import org.gradle.kotlin.dsl.register
 import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.gradle.DokkaTask
 
 class DocumentationPublishingPlugin : Plugin<Project> {
 
-    override fun apply(project: Project): Unit = with(project) {
-        pluginManager.apply("org.jetbrains.dokka")
+    companion object {
+        private const val DOKKA_PLUGIN_ID = "org.jetbrains.dokka"
+        private const val DOKKA_HTML_TASK = "dokkaHtml"
+        private const val DOKKA_HTML_COLLECTOR_TASK = "dokkaHtmlCollector"
+        private const val ASSEMBLE_DOCS_SITE_TASK = "assembleDocsSite"
+    }
 
-        project.tasks.named("dokkaHtml", DokkaTask::class.java) {
-//            outputDirectory.set(project.file("docs"))
+    override fun apply(project: Project): Unit = with(project) {
+        pluginManager.apply(DOKKA_PLUGIN_ID)
+
+        tasks.named(DOKKA_HTML_TASK, DokkaTask::class.java) {
+            // outputDirectory.set(project.file("docs"))
 
             this.dokkaSourceSets.configureEach {
                 documentedVisibilities.set(
@@ -22,6 +31,23 @@ class DocumentationPublishingPlugin : Plugin<Project> {
                     )
                 )
             }
+        }
+
+        if (project == rootProject) {
+            registerRootDocumentationSiteTask()
+        }
+    }
+
+    private fun Project.registerRootDocumentationSiteTask() {
+        val docsSiteDir = layout.buildDirectory.dir("dokka/html")
+
+        tasks.register<Sync>(ASSEMBLE_DOCS_SITE_TASK) {
+            group = "documentation"
+            description = "Assembles a GitHub Pages site with aggregated Dokka output."
+
+            dependsOn(DOKKA_HTML_COLLECTOR_TASK)
+            from(layout.buildDirectory.dir("dokka/htmlCollector"))
+            into(docsSiteDir)
         }
     }
 }

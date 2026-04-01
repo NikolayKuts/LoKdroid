@@ -28,6 +28,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       # We intentionally avoid Android SDK-dependent tasks to keep CI light and reliable.
-      # Dokka runs without the Android SDK and validates that the project config is consistent.
-      - name: Verify project (Dokka HTML)
-        run: ./gradlew dokkaHtml --no-daemon --stacktrace
+      # This assembles the GitHub Pages-ready site and validates Dokka output for both library modules.
+      - name: Verify documentation site
+        run: ./gradlew assembleDocsSite --no-daemon --stacktrace
