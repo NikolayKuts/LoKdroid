@@ -1,5 +1,8 @@
 package com.lib.lokdroid.data.default_implementation
 
+import com.lib.lokdroid.core.LoKdroid
+import com.lib.lokdroid.core.LogManager
+
 /**
  * Normalized representation of a caller location resolved from a platform stack trace.
  *
@@ -19,6 +22,30 @@ internal data class CallSite(
  * Resolves the call site that should be treated as the user-level log invocation on the current platform.
  */
 internal expect fun getTargetReferenceCallSite(): CallSite?
+
+/**
+ * Selects the first external call site after the internal logging entry point.
+ *
+ * @param stackTrace The platform stack frames.
+ * @param logInvocationIndex The last frame index that still belongs to LoKdroid internals.
+ * @param toCallSite Converts a platform frame into the normalized [CallSite] model.
+ */
+internal fun <T> resolveUserLogCallSite(
+    stackTrace: List<T>,
+    logInvocationIndex: Int,
+    toCallSite: (T) -> CallSite,
+): CallSite? {
+    if (logInvocationIndex == -1) return null
+
+    val candidateCallSite = stackTrace
+        .drop(logInvocationIndex + 1)
+        .asSequence()
+        .map(toCallSite)
+        .firstOrNull { callSite -> !callSite.isInternalLoggingWrapper() }
+
+    return candidateCallSite
+        ?: stackTrace.getOrNull(logInvocationIndex + 2)?.let(toCallSite)
+}
 
 /**
  * Builds a stack-frame-like line reference suitable for desktop and iOS console output.
@@ -89,12 +116,31 @@ internal fun CallSite.getDisplayMethodName(): String {
     return if (methodName.isStableDisplayIdentifier()) methodName else "invoke"
 }
 
+internal fun CallSite.getTagName(): String {
+    return getFileTagName() ?: getShortClassName()
+}
+
+internal fun CallSite.isInternalLoggingWrapper(): Boolean {
+    return className in INTERNAL_LOGGING_OWNER_NAMES ||
+        fileName in INTERNAL_LOGGING_CLASS_FILE_NAMES ||
+        (
+            (className == LOG_FUNCTIONS_CLASS_NAME || fileName == LOG_FUNCTIONS_FILE_NAME) &&
+                methodName.startsWith(LOG_FUNCTIONS_METHOD_PREFIX)
+            )
+}
+
 private fun CallSite.getFileClassNameFallback(): String? {
     val baseName = fileName?.substringBeforeLast('.', missingDelimiterValue = fileName)
         ?.takeIf { !it.isNullOrBlank() }
         ?: return null
 
     return "${baseName}Kt"
+}
+
+private fun CallSite.getFileTagName(): String? {
+    return fileName
+        ?.substringBeforeLast('.', missingDelimiterValue = fileName)
+        ?.takeIf { it.isNotBlank() }
 }
 
 private fun String.isStableDisplayIdentifier(): Boolean {
@@ -104,3 +150,21 @@ private fun String.isStableDisplayIdentifier(): Boolean {
         char.isLetterOrDigit() || char == '_' || char == '$' || char == '<' || char == '>'
     }
 }
+
+private val INTERNAL_LOGGING_OWNER_NAMES = setOfNotNull(
+    LoKdroid::class.qualifiedName,
+    LogManager::class.qualifiedName,
+)
+
+private val INTERNAL_LOGGING_CLASS_FILE_NAMES = setOfNotNull(
+    LoKdroid::class.simpleName?.plus(".kt"),
+    LogManager::class.simpleName?.plus(".kt"),
+)
+
+private val LOG_FUNCTIONS_CLASS_NAME = LoKdroid::class.qualifiedName
+    ?.substringBeforeLast('.', missingDelimiterValue = "")
+    ?.takeIf { it.isNotBlank() }
+    ?.plus(".LogFunctionsKt")
+
+private const val LOG_FUNCTIONS_FILE_NAME = "LogFunctions.kt"
+private const val LOG_FUNCTIONS_METHOD_PREFIX = "log"

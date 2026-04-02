@@ -6,15 +6,12 @@ import com.lib.lokdroid.core.LoKdroid
  * Resolves the desktop call site that should be treated as the originating log invocation.
  */
 internal actual fun getTargetReferenceCallSite(): CallSite? {
-    val stackTrace = Thread.currentThread().stackTrace
+    val stackTrace = Thread.currentThread().stackTrace.toList()
     val logInvocationIndex = stackTrace.indexOfLast {
         it.className.contains(LoKdroid::class.simpleName ?: "UnknownClass")
     }
 
-    val stepToReferenceElement = 2
-    if (logInvocationIndex == -1) return null
-
-    return stackTrace.getOrNull(logInvocationIndex + stepToReferenceElement)?.toCallSite()
+    return resolveUserLogCallSite(stackTrace, logInvocationIndex) { it.toCallSite() }
 }
 
 /**

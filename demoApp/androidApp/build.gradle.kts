@@ -1,3 +1,5 @@
+import constants.LokdroidBuildConstants
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -60,6 +62,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(project(":core"))
-    implementation(project(":sharedUI"))
+    implementation(project(LokdroidBuildConstants.modules.core.path))
+    implementation(project(LokdroidBuildConstants.modules.sharedUi.path))
 }

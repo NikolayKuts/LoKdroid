@@ -14,12 +14,7 @@ internal actual fun getTargetReferenceCallSite(): CallSite? {
         it.contains("kfun:${LoKdroid::class.qualifiedName}")
     }
 
-    val stepToReferenceElement = 2
-    if (logInvocationIndex == -1) return null
-
-    return stackTrace
-        .getOrNull(logInvocationIndex + stepToReferenceElement)
-        ?.toCallSite()
+    return resolveUserLogCallSite(stackTrace, logInvocationIndex) { it.toCallSite() }
 }
 
 /**
@@ -39,14 +34,8 @@ private fun getNativeStackTrace(): List<String> {
  * Parses a raw Kotlin/Native stack-trace frame into the normalized [CallSite] model.
  */
 private fun String.toCallSite(): CallSite {
-    val qualifiedSymbol = substringAfter("kfun:", missingDelimiterValue = "")
-        .substringBefore(" +")
-        .substringBefore(" (")
-
-    val ownerName = qualifiedSymbol.substringBeforeLast('.', missingDelimiterValue = qualifiedSymbol)
-    val methodName = qualifiedSymbol.substringAfterLast('.', missingDelimiterValue = "unknownMethod")
-        .substringBefore('#')
-        .ifBlank { "unknownMethod" }
+    val qualifiedSymbol = extractQualifiedSymbol()
+    val (ownerName, methodName) = qualifiedSymbol.extractOwnerAndMethod()
 
     val locationMatch = LOCATION_REGEX.find(this)
     val rawPath = locationMatch?.groups?.get(1)?.value
@@ -60,6 +49,36 @@ private fun String.toCallSite(): CallSite {
         fileName = fileName,
         lineNumber = lineNumber,
     )
+}
+
+private fun String.extractQualifiedSymbol(): String {
+    return substringAfter("kfun:", missingDelimiterValue = "")
+        .substringBefore(" +")
+        .substringBefore(" (")
+}
+
+private fun String.extractOwnerAndMethod(): Pair<String, String> {
+    val signatureIndex = indexOf('(')
+    val ownerMethodSeparatorIndex = if (signatureIndex >= 0) {
+        lastIndexOf('#', startIndex = signatureIndex)
+    } else {
+        -1
+    }
+
+    if (ownerMethodSeparatorIndex >= 0) {
+        val ownerName = substring(0, ownerMethodSeparatorIndex)
+        val methodName = substring(ownerMethodSeparatorIndex + 1, signatureIndex)
+            .ifBlank { "unknownMethod" }
+
+        return ownerName to methodName
+    }
+
+    val symbolWithoutSuffix = substringBefore('#')
+    val ownerName = symbolWithoutSuffix.substringBeforeLast('.', missingDelimiterValue = symbolWithoutSuffix)
+    val methodName = symbolWithoutSuffix.substringAfterLast('.', missingDelimiterValue = "unknownMethod")
+        .ifBlank { "unknownMethod" }
+
+    return ownerName to methodName
 }
 
 /**

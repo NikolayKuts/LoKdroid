@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.lib.lokdroid.core.LoKdroid
+import com.lib.lokdroid.core.log
 import com.lib.lokdroid.core.logI
 import com.lib.lokdroid.core.logV
 import com.lib.lokdroid.data.default_implementation.FormatterBuilder
@@ -24,18 +25,21 @@ class MainActivity : ComponentActivity() {
             /** uncomment this to check logging to remote */
 //            logger = RemoteLogger.getInstance(url = "https://echo.free.beeceptor.com")
             /** uncomment this to check building Formatter */
-//            formatter = FormatterBuilder()
-//                .withPointer()
-//                .space()
-//                .withLineReference()
-//                .space()
-//                .message()
-//                .space()
-//                .custom(text = "some custom text")
-//                .build()
+            formatter = FormatterBuilder()
+                .withPointer()
+                .space()
+                .withLineReference()
+                .space()
+                .message()
+                .space()
+                .custom(text = "some custom text")
+                .build()
         )
 
-        logI(message = "some message")
+        log {
+            "init"()
+            "Android"(I)
+        }
 
         /** custom implementation */
 //        LoKdroid.initialize(

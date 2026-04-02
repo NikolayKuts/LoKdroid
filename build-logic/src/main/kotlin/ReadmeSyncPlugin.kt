@@ -24,9 +24,7 @@ class ReadmeSyncPlugin : Plugin<Project> {
 
                 var readme = readmeFile.readText()
                 val patterns = listOf(
-                    // Kotlin DSL style: implementation("io.github.nikolaykuts:lokdroid:x.y.z")
                     Regex("implementation\\(\\\"io\\.github\\.nikolaykuts:lokdroid:([^)\\\"]+)\\\"\\)"),
-                    // Groovy style: implementation 'io.github.nikolaykuts:lokdroid:x.y.z'
                     Regex("implementation \\\'io\\.github\\.nikolaykuts:lokdroid:([^\\']+)\\\'")
                 )
 

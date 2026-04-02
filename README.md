@@ -10,6 +10,7 @@ LoKdroid is a Kotlin Multiplatform logging library with a shared core API for An
 - **Multiplatform targets**: Core logging works on Android, desktop JVM, and iOS.
 - **Shared formatter DSL**: `FormatterBuilder` is available from shared code and formats logs on all three platforms.
 - **Customizable formatting and tagging**: Override formatter, logger, tag provider, and message builder factory.
+- **Best-effort caller resolution**: Shared caller normalization skips internal LoKdroid wrapper frames on Android, desktop JVM, and iOS.
 - **Platform-native console behavior**: Android uses `Logcat`; desktop JVM and iOS use formatted console output with emoji level markers.
 - **Android-specific extensions**: File logging, Logcat-formatted files, and remote logging remain available on Android.
 - **Compose demo apps**: The repository includes Android, desktop, and native iOS demo hosts backed by a shared Compose Multiplatform UI module.
@@ -51,14 +52,14 @@ repositories {
 **Kotlin DSL**
 ```gradle
 dependencies {
-    implementation("io.github.nikolaykuts:lokdroid:0.1.1-alpha")
+    implementation("io.github.nikolaykuts:lokdroid:0.1.2-alpha")
 }
 ```
 
 **Groovy**
 ```gradle
 dependencies {
-    implementation 'io.github.nikolaykuts:lokdroid:0.1.1-alpha'
+    implementation 'io.github.nikolaykuts:lokdroid:0.1.2-alpha'
 }
 ```
 
@@ -164,7 +165,7 @@ logV {
 When used with the `FormatterBuilder` configuration from the next section, the output can look like this:
 
 ```text
-DesktopMainKt    [Verbose] ⬜ --->    DesktopMainKt.invoke(DesktopMain.kt:24) multi log
+DesktopMain    [Verbose] ⬜ --->    DesktopMainKt.invoke(DesktopMain.kt:24) multi log
     🟥 -> some Error
     🟩 -> some Info
     🟦 -> some Debug
@@ -180,6 +181,8 @@ Platform behavior for `withLineReference()`:
 - Android: inserts a compact reference like `MainScreen.kt:42`
 - Desktop JVM: inserts a stack-frame-style reference like `MainScreen.onClick(MainScreen.kt:42)`
 - iOS: inserts the same stack-frame-style reference format as desktop
+
+Before formatting the line reference, LoKdroid skips its own internal wrapper frames such as `LoKdroid`, `LogManager`, and `LogFunctions*`, then uses the first external frame that remains.
 
 ```kotlin
 LoKdroid.initialize(
@@ -200,11 +203,12 @@ LoKdroid.initialize(
 - Android `ConsoleLogger` writes through the platform logging system, so logs appear in Logcat with Android priorities.
 - Desktop JVM and iOS `ConsoleLogger` write formatted lines to standard output using the pattern `Tag<TAB>[Level] emoji message`.
 - The default desktop and iOS level markers use square emoji blocks: `⬜`, `🟦`, `🟩`, `🟨`, `🟥`.
+- The default `tagProvider` derives the tag from the caller file name without the `.kt` extension when source metadata is available.
 
 Desktop and iOS example output:
 
 ```text
-SharedUiScreensKt    [Debug] 🟦 --->    SharedUiScreensKt.invokeMultipleLog(SharedUiScreens.kt:293) Multiple log
+SharedUiScreens    [Debug] 🟦 --->    SharedUiScreensKt.invokeMultipleLog(SharedUiScreens.kt:293) Multiple log
 ```
 
 ## Default Initialization
@@ -252,9 +256,9 @@ Platform visibility:
 - `desktopMain` and `iosMain` use the same shared API surface and platform-specific console behavior under the hood.
 
 Console defaults:
-- The default desktop tag is derived from the caller class name, matching Android-style tag resolution.
-- iOS uses the same console output shape as desktop.
-- Top-level Kotlin functions on desktop and iOS are tagged with their synthetic file owner, for example `SharedUiScreensKt`.
+- The default tag on Android, desktop JVM, and iOS is derived from the caller file name, for example `SharedUiScreens`.
+- Desktop and iOS keep stack-frame-style line references, so top-level Kotlin functions still appear with synthetic owners such as `SharedUiScreensKt.invoke(...)`.
+- Caller resolution skips internal LoKdroid wrappers only. If you log through your own helper or extension function, that helper becomes the resolved caller unless you provide a custom `tagProvider`.
 
 ## License
 

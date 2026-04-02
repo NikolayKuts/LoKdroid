@@ -8,11 +8,11 @@ object TagProvider {
     /**
      * Resolves the default tag for the current log invocation.
      *
-     * @return The short caller name, or `????` when the caller cannot be determined.
+     * @return The caller file name without extension when available, or `????` when the caller cannot be determined.
      */
     fun getTag(): String {
         val callSite = getTargetReferenceCallSite() ?: return "????"
 
-        return callSite.getShortClassName()
+        return callSite.getTagName()
     }
 }

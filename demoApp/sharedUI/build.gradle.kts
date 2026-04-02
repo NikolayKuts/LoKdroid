@@ -1,3 +1,5 @@
+import constants.LokdroidBuildConstants
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinMultiplatform)
@@ -45,7 +47,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core"))
+            implementation(project(LokdroidBuildConstants.modules.core.path))
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
