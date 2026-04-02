@@ -9,7 +9,7 @@ import kotlin.test.assertNotNull
 class TagProviderTest {
 
     @Test
-    fun `desktop default tag matches android style caller class name`() {
+    fun `desktop default tag matches caller file name`() {
         var capturedTag: String? = null
 
         LoKdroid.initialize(

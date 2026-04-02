@@ -25,24 +25,19 @@ internal fun formatDate(timestamp: Long, pattern: String = LOG_DATE_PATTERN): St
 /**
  * Retrieves the relevant call site that references the point in code where the logger was called.
  *
- * This method looks through the current thread's stack trace to find the last occurrence of the class
- * related to the logger ([LoKdroid] class), then returns the call site that is two steps ahead of that
- * occurrence. This is typically the location in the code where the logging actually took place.
+ * This method scans the current thread's stack trace, finds the last internal [LoKdroid] frame,
+ * then delegates to the shared caller resolver to skip known LoKdroid wrapper frames and pick the
+ * first external call site that remains.
  *
  * @return The normalized [CallSite] pointing to the code reference, or `null` if it cannot be determined.
  */
 internal actual fun getTargetReferenceCallSite(): CallSite? {
-    val stackTrace = Thread.currentThread().stackTrace
-    val stackTraceElement = stackTrace.lastOrNull {
+    val stackTrace = Thread.currentThread().stackTrace.toList()
+    val logInvocationIndex = stackTrace.indexOfLast {
         it.className.contains(LoKdroid::class.simpleName ?: "UnknownClass")
     }
-    val stackTraceElementIndex = stackTrace.indexOf(stackTraceElement)
-    val stepToReferenceElement = 2
-    if (stackTraceElementIndex == -1) return null
 
-    val referenceElement = stackTrace.getOrNull(stackTraceElementIndex + stepToReferenceElement) ?: return null
-
-    return referenceElement.toCallSite()
+    return resolveUserLogCallSite(stackTrace, logInvocationIndex) { it.toCallSite() }
 }
 
 /**
