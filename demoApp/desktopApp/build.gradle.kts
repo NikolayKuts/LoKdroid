@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import constants.LokdroidBuildConstants
 
 plugins {
     alias(libs.plugins.jetbrainsKotlinJvm)
@@ -18,8 +19,8 @@ tasks.withType<KotlinJvmCompile>().configureEach {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":sharedUI"))
+    implementation(project(LokdroidBuildConstants.modules.core.path))
+    implementation(project(LokdroidBuildConstants.modules.sharedUi.path))
     implementation(compose.desktop.currentOs)
 
     testImplementation(kotlin("test"))

@@ -18,8 +18,6 @@ class DocumentationPublishingPlugin : Plugin<Project> {
         pluginManager.apply(DOKKA_PLUGIN_ID)
 
         tasks.named(DOKKA_HTML_TASK, DokkaTask::class.java) {
-            // outputDirectory.set(project.file("docs"))
-
             this.dokkaSourceSets.configureEach {
                 documentedVisibilities.set(
                     setOf(

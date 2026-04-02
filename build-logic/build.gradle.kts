@@ -4,19 +4,17 @@ plugins {
 
 gradlePlugin {
     plugins {
-        register("lokdroid-documentation-publishing") {
-            id = "lokdroid-documentation-publishing"
-            implementationClass = "DocumentationPublishingPlugin"
-        }
-
-        register("lokdroid-maven-central-publishing") {
-            id = "lokdroid-maven-central-publishing"
-            implementationClass = "MavenCentralPublishingPlugin"
-        }
-
-        register("lokdroid-readme-sync") {
-            id = "lokdroid-readme-sync"
-            implementationClass = "ReadmeSyncPlugin"
+        setOf(
+            "lokdroid-documentation-publishing" to "DocumentationPublishingPlugin",
+            "lokdroid-publishing-config" to "PublishingConfigurationPlugin",
+            "lokdroid-maven-central-publishing" to "MavenCentralPublishingPlugin",
+            "lokdroid-maven-local-publishing" to "MavenLocalPublishingPlugin",
+            "lokdroid-readme-sync" to "ReadmeSyncPlugin"
+        ).forEach {
+            register(it.first) {
+                id = it.first
+                implementationClass = it.second
+            }
         }
     }
 }

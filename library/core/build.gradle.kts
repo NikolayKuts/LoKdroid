@@ -2,9 +2,10 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinMultiplatform)
     alias(libs.plugins.kotlinSerialization)
-
     id("lokdroid-documentation-publishing")
+    id("lokdroid-publishing-config")
     id("lokdroid-maven-central-publishing")
+    id("lokdroid-maven-local-publishing")
     id("lokdroid-readme-sync")
 }
 

@@ -1,9 +1,11 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinMultiplatform)
-
     id("lokdroid-documentation-publishing")
+    id("lokdroid-publishing-config")
     id("lokdroid-maven-central-publishing")
+    id("lokdroid-maven-local-publishing")
+    id("lokdroid-readme-sync")
 }
 
 val enableIosTargets = providers
