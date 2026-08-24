@@ -32,6 +32,10 @@ kotlin {
             }
         }
     }
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
     if (enableIosTargets) {
         iosX64()
         iosArm64()

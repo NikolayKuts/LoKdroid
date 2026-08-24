@@ -17,6 +17,11 @@ object Modules {
         path = ":desktopApp",
         directory = "demoApp/desktopApp"
     )
+    val webApp = LokdroidModule(
+        name = "webApp",
+        path = ":webApp",
+        directory = "demoApp/webApp"
+    )
     val core = LokdroidModule(
         name = "core",
         path = ":core",
@@ -28,6 +33,6 @@ object Modules {
         directory = "library/domain"
     )
 
-    val all = listOf(androidApp, sharedUi, desktopApp, core, domain)
+    val all = listOf(androidApp, sharedUi, desktopApp, webApp, core, domain)
     val library = listOf(core, domain)
 }
