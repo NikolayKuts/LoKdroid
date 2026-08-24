@@ -5,7 +5,7 @@ androidCompileSdk = "34"
 androidTargetSdk = "34"
 androidLibraryMinSdk = "25"
 androidDemoAppMinSdk = "25"
-javaVersion = "1.8"
+javaVersion = "17"
 
 agp = "8.5.1"
 kotlin = "2.1.20"

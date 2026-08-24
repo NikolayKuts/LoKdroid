@@ -15,21 +15,21 @@ val enableIosTargets = providers
     ?.toBooleanStrictOrNull()
     ?: true
 
-val androidJavaVersion = JavaVersion.toVersion(libs.versions.javaVersion.get())
-val desktopJvmTarget = "11"
+val javaVersion = libs.versions.javaVersion.get()
+val androidJavaVersion = JavaVersion.toVersion(javaVersion)
 
 kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = libs.versions.javaVersion.get()
+                jvmTarget = javaVersion
             }
         }
     }
     jvm("desktop") {
         compilations.all {
             kotlinOptions {
-                jvmTarget = desktopJvmTarget
+                jvmTarget = javaVersion
             }
         }
     }

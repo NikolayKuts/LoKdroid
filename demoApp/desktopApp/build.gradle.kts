@@ -10,12 +10,14 @@ plugins {
 
 description = "Desktop demo app module for LoKdroid."
 
+val javaVersion = libs.versions.javaVersion.get()
+
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(javaVersion.toInt())
 }
 
 tasks.withType<KotlinJvmCompile>().configureEach {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
+    compilerOptions.jvmTarget.set(JvmTarget.fromTarget(javaVersion))
 }
 
 dependencies {
