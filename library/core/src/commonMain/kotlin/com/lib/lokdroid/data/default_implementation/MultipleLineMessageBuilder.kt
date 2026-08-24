@@ -4,13 +4,12 @@ import com.lib.lokdroid.domain.IMessageBuilder
 import com.lib.lokdroid.domain.model.Level
 
 /**
- * Default implementation of [IMessageBuilder] providing a simple DSL-based message composition.
+ * Default implementation of [IMessageBuilder] for building a multi-line message with the DSL.
  *
  * Each string literal invoked as a function inside a logging block is appended as a new line.
- * The very first line is treated as a header, subsequent lines are prefixed with "->" for readability.
+ * The very first line is treated as a header, while subsequent lines are prefixed with "->" for readability.
  */
-
-class MessageBuilder : IMessageBuilder {
+class MultipleLineMessageBuilder : IMessageBuilder {
 
     private val contentBuilder = StringBuilder()
 

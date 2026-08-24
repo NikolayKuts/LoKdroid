@@ -21,7 +21,7 @@ fun initializeLoKdroid() {
 
     log {
         "init"()
-        "Desktop"(I)
+        "iOS"(I)
     }
 }
 

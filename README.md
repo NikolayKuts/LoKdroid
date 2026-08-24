@@ -9,7 +9,7 @@ LoKdroid is a Kotlin Multiplatform logging library with a shared core API for An
 - **Shared logging API**: Use the same `LoKdroid`, log functions, and builder DSL from common code.
 - **Multiplatform targets**: Core logging works on Android, desktop JVM, and iOS.
 - **Shared formatter DSL**: `FormatterBuilder` is available from shared code and formats logs on all three platforms.
-- **Customizable formatting and tagging**: Override formatter, logger, tag provider, and message builder factory.
+- **Customizable formatting and tagging**: Override formatter, logger, tag provider, and multi-line message builder factory.
 - **Best-effort caller resolution**: Shared caller normalization skips internal LoKdroid wrapper frames on Android, desktop JVM, and iOS.
 - **Platform-native console behavior**: Android uses `Logcat`; desktop JVM and iOS use formatted console output with emoji level markers.
 - **Android-specific extensions**: File logging, Logcat-formatted files, and remote logging remain available on Android.
@@ -144,7 +144,7 @@ logI {
 ### Multiple logging with per-line levels
 
 Inside the `IMessageBuilder` DSL, the string extension function accepts an optional `Level`.
-The default `MessageBuilder` uses that value to prepend an emoji marker for the corresponding line.
+The default `MultipleLineMessageBuilder` uses that value to prepend an emoji marker for the corresponding line.
 
 Shortcuts available inside the builder:
 - `V` for `Level.Verbose`
@@ -223,7 +223,7 @@ fun initialize(
     logger: ILogger = ConsoleLogger,
     formatter: IFormatter = IFormatter { message -> message },
     tagProvider: () -> String = { TagProvider.getTag() },
-    messageBuilderFactory: () -> IMessageBuilder = { MessageBuilder() }
+    multipleLineMessageBuilderFactory: () -> IMessageBuilder = { MultipleLineMessageBuilder() }
 )
 ```
 
@@ -244,7 +244,7 @@ LoKdroid.initialize(
     logger = { level: Level, tag: String, message: String -> /** your logic */ },
     formatter = { message -> "return formatted message: $message" },
     tagProvider = { "custom tag" },
-    messageBuilderFactory = {
+    multipleLineMessageBuilderFactory = {
         object : IMessageBuilder {
             override fun build(): String = "build your string"
 
