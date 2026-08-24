@@ -65,11 +65,13 @@ dependencies {
 
 For a Kotlin Multiplatform project, put the dependency in `commonMain` when you need the shared API there. `FormatterBuilder` is part of the shared API and can be used from code that targets Android, desktop JVM, and iOS. Android-specific implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FileFormat` are available only from `androidMain`.
 
-Initialize LoKdroid before logging starts:
+LoKdroid works out of the box and does not require explicit initialization before logging starts. If you do nothing, it uses the default console logger, identity formatter, caller-based tag provider, and default message builder:
 
 ```kotlin
-LoKdroid.initialize()
+logI(message = "LoKdroid is ready")
 ```
+
+Call `LoKdroid.initialize(...)` only when you want to override those defaults.
 
 ## Running Demo Apps
 
@@ -82,7 +84,7 @@ LoKdroid.initialize()
 The repository already contains a native iOS host app under `demoApp/iosApp`.
 
 - The shared Kotlin UI is exposed from `:sharedUI` as the `sharedUI` framework.
-- The Swift app initializes logging through `MainViewControllerKt.initializeLoKdroid()`.
+- The Swift app customizes the default logging configuration through `MainViewControllerKt.initializeLoKdroid()`.
 - The root Compose screen is embedded through `MainViewControllerKt.MainViewController()`.
 
 Minimal integration looks like this on the Swift side:
@@ -211,7 +213,9 @@ Desktop and iOS example output:
 SharedUiScreens    [Debug] 🟦 --->    SharedUiScreensKt.invokeMultipleLog(SharedUiScreens.kt:293) Multiple log
 ```
 
-## Default Initialization
+## Default Configuration
+
+LoKdroid starts with this configuration automatically, even if `initialize(...)` is never called:
 
 ```kotlin
 fun initialize(
@@ -222,6 +226,8 @@ fun initialize(
     messageBuilderFactory: () -> IMessageBuilder = { MessageBuilder() }
 )
 ```
+
+Calling `LoKdroid.initialize(...)` later simply replaces the current configuration with your custom one.
 
 Available implementations:
 - `ConsoleLogger` is available on Android, desktop JVM, and iOS.

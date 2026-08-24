@@ -13,30 +13,27 @@ import com.lib.lokdroid.domain.model.Level
  * It provides a centralized logging utility that can be configured and accessed globally
  * throughout an application.
  *
- * Before using the logging functions, it must be initialized using [initialize].
- * Failing to do so will result in a RuntimeException when trying to log.
+ * The logger starts with a default configuration and can be overridden at any time using [initialize].
  */
 object LoKdroid {
 
-    private var logManager: LogManager? = null
-
-    /**
-     * Provides a non-nullable instance of [LogManager]. Throws a [RuntimeException] if [LoKdroid] is not initialized.
-     */
-    private val nonNullableLogManager: LogManager
-        get() = logManager ?: throw RuntimeException(
-            "LoKdroid has not been initialized. Must call initialize() before logging."
-        )
+    private var logManager: LogManager = LogManager(
+        minLevel = Level.Verbose,
+        logger = ConsoleLogger,
+        formatter = IFormatter { message -> message },
+        tagProvider = { TagProvider.getTag() },
+        messageBuilderFactory = { MessageBuilder() }
+    )
 
     /**
      * Gets the minimum logging level set for the current [LogManager].
      */
     internal val minLevel: Level
-        get() = nonNullableLogManager.minLevel
+        get() = logManager.minLevel
 
     /**
-     * Initializes the [LoKdroid] with a custom configuration. If not called,
-     * [LoKdroid] will not perform any logging operations.
+     * Initializes the [LoKdroid] with a custom configuration, replacing the current [LogManager].
+     * Calling this function is optional because [LoKdroid] starts with an equivalent default configuration.
      *
      * @param minLevel The minimum level of log messages to be processed.
      * @param logger The logger implementation to use for logging messages.
@@ -52,15 +49,13 @@ object LoKdroid {
         tagProvider: () -> String = { TagProvider.getTag() },
         messageBuilderFactory: () -> IMessageBuilder = { MessageBuilder() }
     ) {
-        val initializedLogManager = LogManager(
+        logManager = LogManager(
             minLevel = minLevel,
             logger = logger,
             formatter = formatter,
             tagProvider = tagProvider,
             messageBuilderFactory = messageBuilderFactory,
         )
-
-        logManager = initializedLogManager
     }
 
     /**
@@ -71,7 +66,7 @@ object LoKdroid {
      * @param message The message to log.
      */
     internal fun log(level: Level, message: String) {
-        nonNullableLogManager.log(level = level, message = message)
+        logManager.log(level = level, message = message)
     }
 
     /**
@@ -82,6 +77,6 @@ object LoKdroid {
      * @param block A lambda block to configure the [IMessageBuilder].
      */
     internal fun log(level: Level, block: IMessageBuilder.() -> Unit) {
-        nonNullableLogManager.log(level = level, block = block)
+        logManager.log(level = level, block = block)
     }
 }
