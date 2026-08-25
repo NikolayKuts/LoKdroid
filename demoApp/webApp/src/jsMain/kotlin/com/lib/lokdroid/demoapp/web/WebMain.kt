@@ -1,12 +1,14 @@
-package com.lib.lokdroid.demoapp.sharedui
+package com.lib.lokdroid.demoapp.web
 
-import androidx.compose.ui.window.ComposeUIViewController
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.CanvasBasedWindow
 import com.lib.lokdroid.core.LoKdroid
 import com.lib.lokdroid.core.log
 import com.lib.lokdroid.data.default_implementation.FormatterBuilder
-import platform.UIKit.UIViewController
+import com.lib.lokdroid.demoapp.sharedui.SharedUiDemoApp
 
-fun initializeLoKdroid() {
+@OptIn(ExperimentalComposeUiApi::class)
+fun main() {
     LoKdroid.initialize(
         formatter = FormatterBuilder()
             .withPointer()
@@ -21,10 +23,10 @@ fun initializeLoKdroid() {
 
     log {
         "init"()
-        "iOS"(I)
+        "Web"(I)
     }
-}
 
-fun MainViewController(): UIViewController = ComposeUIViewController {
-    SharedUiDemoApp()
+    CanvasBasedWindow(title = "LoKdroid Web Demo") {
+        SharedUiDemoApp()
+    }
 }

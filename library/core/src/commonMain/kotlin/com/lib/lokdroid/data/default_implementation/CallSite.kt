@@ -1,8 +1,5 @@
 package com.lib.lokdroid.data.default_implementation
 
-import com.lib.lokdroid.core.LoKdroid
-import com.lib.lokdroid.core.LogManager
-
 /**
  * Normalized representation of a caller location resolved from a platform stack trace.
  *
@@ -151,20 +148,20 @@ private fun String.isStableDisplayIdentifier(): Boolean {
     }
 }
 
-private val INTERNAL_LOGGING_OWNER_NAMES = setOfNotNull(
-    LoKdroid::class.qualifiedName,
-    LogManager::class.qualifiedName,
+private val INTERNAL_LOGGING_OWNER_NAMES = setOf(
+    LOKDROID_CLASS_NAME,
+    LOG_MANAGER_CLASS_NAME,
 )
 
-private val INTERNAL_LOGGING_CLASS_FILE_NAMES = setOfNotNull(
-    LoKdroid::class.simpleName?.plus(".kt"),
-    LogManager::class.simpleName?.plus(".kt"),
+private val INTERNAL_LOGGING_CLASS_FILE_NAMES = setOf(
+    LOKDROID_FILE_NAME,
+    LOG_MANAGER_FILE_NAME,
 )
 
-private val LOG_FUNCTIONS_CLASS_NAME = LoKdroid::class.qualifiedName
-    ?.substringBeforeLast('.', missingDelimiterValue = "")
-    ?.takeIf { it.isNotBlank() }
-    ?.plus(".LogFunctionsKt")
-
+private const val LOKDROID_CLASS_NAME = "com.lib.lokdroid.core.LoKdroid"
+private const val LOG_MANAGER_CLASS_NAME = "com.lib.lokdroid.core.LogManager"
+private const val LOKDROID_FILE_NAME = "LoKdroid.kt"
+private const val LOG_MANAGER_FILE_NAME = "LogManager.kt"
+private const val LOG_FUNCTIONS_CLASS_NAME = "com.lib.lokdroid.core.LogFunctionsKt"
 private const val LOG_FUNCTIONS_FILE_NAME = "LogFunctions.kt"
 private const val LOG_FUNCTIONS_METHOD_PREFIX = "log"

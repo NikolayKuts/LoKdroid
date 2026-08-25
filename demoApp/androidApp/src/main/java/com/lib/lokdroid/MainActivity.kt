@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
 //            logger = { level: Level, tag: String, message: String -> /** your logic */ },
 //            formatter = { message -> "return formatted message: $message" }, /** or use FormatterBuilder */
 //            tagProvider = { "custom tag" },
-//            messageBuilderFactory = {
+//            multipleLineMessageBuilderFactory = {
 //                /** provide your custom IMessageBuilder */
 //                object : com.lib.lokdroid.domain.IMessageBuilder {
 //

@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lib.lokdroid.core.log
@@ -242,8 +243,23 @@ private fun DemoItemRow(
     isSelected: Boolean,
     onClick: () -> Unit,
 ) {
-    val backgroundColor = if (isSelected) SelectedItemBackgroundColor else IdleItemBackgroundColor
-    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
+    val backgroundColor = if (isSelected) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.surfaceVariant
+    }
+
+    val contentColor = if (isSelected) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
+    val borderColor = if (isSelected) {
+        MaterialTheme.colorScheme.primary
+    } else {
+        MaterialTheme.colorScheme.outlineVariant
+    }
 
     Row(
         modifier = Modifier
@@ -263,6 +279,7 @@ private fun DemoItemRow(
         Text(
             text = value,
             style = MaterialTheme.typography.bodyLarge,
+            color = contentColor,
         )
     }
 }
@@ -279,7 +296,10 @@ private fun LogActionsRow(actions: List<LogAction>) {
         actions.forEach { action ->
             Button(
                 onClick = action.onClick,
-                colors = ButtonDefaults.buttonColors(containerColor = action.color),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = action.color,
+                    contentColor = action.color.bestContrastingContentColor(),
+                ),
             ) {
                 Text(text = action.label)
             }
@@ -293,5 +313,13 @@ private fun invokeMultipleLog(level: Level, data: List<String>) {
     log(level = level) {
         "Multiple log"(level)
         data.forEach { value -> value() }
+    }
+}
+
+private fun Color.bestContrastingContentColor(): Color {
+    return if (luminance() > 0.42f) {
+        Color(0xFF111111)
+    } else {
+        Color(0xFFF8F8F8)
     }
 }

@@ -32,6 +32,13 @@ kotlin {
             }
         }
     }
+    js(IR) {
+        browser()
+        // Runs jsTest on Node so the browser call-site resolution logic can be tested without a
+        // headless browser toolchain. Does not change the published JS artifact.
+        nodejs()
+        binaries.executable()
+    }
     if (enableIosTargets) {
         iosX64()
         iosArm64()

@@ -31,6 +31,10 @@ kotlin {
             }
         }
     }
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
     if (enableIosTargets) {
         iosX64()
         iosArm64()
@@ -38,8 +42,7 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-        }
+        commonMain.dependencies {}
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
