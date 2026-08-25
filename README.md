@@ -2,18 +2,18 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nikolaykuts/lokdroid)](https://central.sonatype.com/artifact/io.github.nikolaykuts/lokdroid)
 
-LoKdroid is a Kotlin Multiplatform logging library with a shared core API for Android, desktop JVM, and iOS, plus Android-specific extensions for file and Logcat-oriented logging.
+LoKdroid is a Kotlin Multiplatform logging library with a shared core API for Android, desktop JVM, iOS, and Kotlin/JS in the browser, plus Android-specific extensions for file and Logcat-oriented logging.
 
 ## Features
 
 - **Shared logging API**: Use the same `LoKdroid`, log functions, and builder DSL from common code.
-- **Multiplatform targets**: Core logging works on Android, desktop JVM, and iOS.
-- **Shared formatter DSL**: `FormatterBuilder` is available from shared code and formats logs on all three platforms.
+- **Multiplatform targets**: Core logging works on Android, desktop JVM, iOS, and Kotlin/JS in the browser.
+- **Shared formatter DSL**: `FormatterBuilder` is available from shared code and formats logs on every target.
 - **Customizable formatting and tagging**: Override formatter, logger, tag provider, and multi-line message builder factory.
-- **Best-effort caller resolution**: Shared caller normalization skips internal LoKdroid wrapper frames on Android, desktop JVM, and iOS.
-- **Platform-native console behavior**: Android uses `Logcat`; desktop JVM and iOS use formatted console output with emoji level markers.
+- **Best-effort caller resolution**: Shared caller normalization skips internal LoKdroid wrapper frames on every target. In the browser, bundled stack positions are mapped back through source maps to the original `.kt` file and line.
+- **Platform-native console behavior**: Android uses `Logcat`; desktop JVM and iOS use formatted console output with emoji level markers; the browser routes each level to the matching `console` method.
 - **Android-specific extensions**: File logging, Logcat-formatted files, and remote logging remain available on Android.
-- **Compose demo apps**: The repository includes Android, desktop, and native iOS demo hosts backed by a shared Compose Multiplatform UI module.
+- **Compose demo apps**: The repository includes Android, desktop, native iOS, and browser demo hosts backed by a shared Compose Multiplatform UI module.
 
 ## Documentation
 View **[KDoc](https://nikolaykuts.github.io/LoKdroid/)**
@@ -30,13 +30,14 @@ LoKdroid/
 └── demoApp/
     ├── androidApp/ -> Gradle module :androidApp
     ├── desktopApp/ -> Gradle module :desktopApp
+    ├── webApp/     -> Gradle module :webApp
     ├── sharedUI/   -> Gradle module :sharedUI
     └── iosApp/     -> native iOS Xcode host app, not part of the Gradle build
 ```
 
 Notes:
 - `library/` and `demoApp/` are directories for organization, not Gradle modules.
-- `:sharedUI` contains the shared Compose Multiplatform screens used by the Android, desktop, and iOS demo hosts.
+- `:sharedUI` contains the shared Compose Multiplatform screens used by the Android, desktop, iOS, and browser demo hosts.
 - `demoApp/iosApp` is a native Xcode application that imports the `sharedUI` framework and hosts Compose UI through `MainViewController`.
 
 ## Getting Started
@@ -78,6 +79,7 @@ Call `LoKdroid.initialize(...)` only when you want to override those defaults.
 - Android: run the `androidApp` application module from Android Studio.
 - Desktop: run `./gradlew :desktopApp:run`
 - iOS: open `demoApp/iosApp/iosApp.xcodeproj` in Xcode and run the `iosApp` scheme.
+- Web: run `./gradlew :webApp:jsBrowserDevelopmentRun` and open the printed `localhost` address.
 
 ### iOS Demo Host Setup
 
@@ -177,12 +179,13 @@ DesktopMain    [Verbose] ⬜ --->    DesktopMainKt.invoke(DesktopMain.kt:24) mul
 
 ### Formatter Builder
 
-`FormatterBuilder` is shared and can be configured the same way for Android, desktop JVM, and iOS by passing the built `IFormatter` into `LoKdroid.initialize`.
+`FormatterBuilder` is shared and can be configured the same way on every target by passing the built `IFormatter` into `LoKdroid.initialize`.
 
 Platform behavior for `withLineReference()`:
 - Android: inserts a compact reference like `MainScreen.kt:42`
 - Desktop JVM: inserts a stack-frame-style reference like `MainScreen.onClick(MainScreen.kt:42)`
 - iOS: inserts the same stack-frame-style reference format as desktop
+- Web: inserts the same stack-frame-style reference resolved back to Kotlin sources, such as `SharedUiScreensKt.onClick(SharedUiScreens.kt:77)`
 
 Before formatting the line reference, LoKdroid skips its own internal wrapper frames such as `LoKdroid`, `LogManager`, and `LogFunctions*`, then uses the first external frame that remains.
 
@@ -200,10 +203,56 @@ LoKdroid.initialize(
 )
 ```
 
+### Browser Line References
+
+In the browser a stack frame points into the bundled script, for example `webApp.js:26276:7`. LoKdroid
+translates that position back to Kotlin by reading the source map the script declares for itself, so the
+reference names the original file and line the log was written on:
+
+```text
+SharedUiScreens    [Debug] 🟦 --->    SharedUiScreensKt.onClick(SharedUiScreens.kt:78) first
+```
+
+This requires the bundle's source map to be reachable over HTTP next to the script, which means the
+webpack devtool has to emit a real `.map` file rather than inline modules through `eval`:
+
+```kotlin
+import org.jetbrains.kotlin.gradle.targets.js.webpack.WebpackDevtool
+
+kotlin {
+    js(IR) {
+        browser {
+            commonWebpackConfig {
+                devtool = WebpackDevtool.NOSOURCES_SOURCE_MAP
+            }
+        }
+        binaries.executable()
+    }
+}
+```
+
+`nosources-source-map` is the recommended setting: LoKdroid only reads the file and line mappings, so
+leaving the Kotlin sources out of the map keeps it smaller and keeps your code out of the shipped map.
+Use `WebpackDevtool.SOURCE_MAP` instead when you also want browser developer tools to display and step
+through the original `.kt` files, which needs the sources embedded.
+
+Notes:
+- The Kotlin/JS default devtool is `eval-source-map`, whose positions no fetchable source map
+  describes. LoKdroid never guesses a Kotlin line in that case. Because that devtool keeps every Kotlin
+  module as its own script, the caller is still identified and reported against the generated file, as
+  in `SharedUiDemoApp(LoKdroid-sharedUI.js:226)`, with the tag falling back to the module name.
+- If the bundle is a single script and its map cannot be reached at all, LoKdroid has no way to tell its
+  own frames from yours, so it reports the `????` tag and `at ???(Unknown Source)` instead of a guess.
+- The map is downloaded and indexed once, on the first log call, and reused for every later call. A
+  script whose map cannot be reached is remembered as such, so a missing map is never re-requested.
+- Minified production bundles still resolve the correct file and line; only the method name is lost to
+  minification.
+
 ### Default Console Behavior
 
 - Android `ConsoleLogger` writes through the platform logging system, so logs appear in Logcat with Android priorities.
 - Desktop JVM and iOS `ConsoleLogger` write formatted lines to standard output using the pattern `Tag<TAB>[Level] emoji message`.
+- Web `ConsoleLogger` writes the same pattern to the browser console, routing `Verbose` and `Debug` to `console.log`, `Info` to `console.info`, `Warn` to `console.warn`, and `Error` to `console.error`.
 - The default desktop and iOS level markers use square emoji blocks: `⬜`, `🟦`, `🟩`, `🟨`, `🟥`.
 - The default `tagProvider` derives the tag from the caller file name without the `.kt` extension when source metadata is available.
 
@@ -230,7 +279,7 @@ fun initialize(
 Calling `LoKdroid.initialize(...)` later simply replaces the current configuration with your custom one.
 
 Available implementations:
-- `ConsoleLogger` is available on Android, desktop JVM, and iOS.
+- `ConsoleLogger` is available on Android, desktop JVM, iOS, and the browser.
 - `FileLogger` is Android-only and writes messages to a file. It supports Android Studio Logcat import format.
 - `ConsoleAndFileLogger` is Android-only.
 - `RemoteLogger` is currently Android-only.
@@ -259,11 +308,11 @@ LoKdroid.initialize(
 Platform visibility:
 - `commonMain` sees the shared API, including `LoKdroid`, log functions, `ILogger`, `IFormatter`, `IMessageBuilder`, `ConsoleLogger`, and `FormatterBuilder`.
 - `androidMain` also sees Android-only implementations such as `FileLogger`, `ConsoleAndFileLogger`, `RemoteLogger`, and `FileFormat`.
-- `desktopMain` and `iosMain` use the same shared API surface and platform-specific console behavior under the hood.
+- `desktopMain`, `iosMain`, and `jsMain` use the same shared API surface and platform-specific console behavior under the hood.
 
 Console defaults:
-- The default tag on Android, desktop JVM, and iOS is derived from the caller file name, for example `SharedUiScreens`.
-- Desktop and iOS keep stack-frame-style line references, so top-level Kotlin functions still appear with synthetic owners such as `SharedUiScreensKt.invoke(...)`.
+- The default tag on every target is derived from the caller file name, for example `SharedUiScreens`.
+- Desktop, iOS, and the browser keep stack-frame-style line references, so top-level Kotlin functions still appear with synthetic owners such as `SharedUiScreensKt.invoke(...)`.
 - Caller resolution skips internal LoKdroid wrappers only. If you log through your own helper or extension function, that helper becomes the resolved caller unless you provide a custom `tagProvider`.
 
 ## License
