@@ -16,6 +16,7 @@
 - Raised the JVM target of the published `:core` and `:domain` artifacts from Java 1.8 to Java 17, which is now the minimum for consuming projects.
 - Replaced reflection-derived class and file name constants in shared caller resolution with literals, because Kotlin/JS does not provide `qualifiedName`.
 - Improved colour contrast in the shared Compose demo UI.
+- Enabled the experimental Compose Kotlin/JS canvas target from the root build script, since `gradle.properties` is not version controlled and CI had no way to set the flag.
 
 ## 0.1.2-alpha
 

@@ -10,3 +10,11 @@ plugins {
     alias(libs.plugins.vanniktechMavenPublish) apply false
     id("lokdroid-documentation-publishing")
 }
+
+// Compose refuses to configure the experimental Kotlin/JS canvas target used by :webApp unless this
+// flag is set. It cannot live in gradle.properties, which is not version controlled here because it
+// carries publishing credentials, so declaring it in the build script is what keeps CI and fresh
+// clones building.
+allprojects {
+    extra["org.jetbrains.compose.experimental.jscanvas.enabled"] = "true"
+}
