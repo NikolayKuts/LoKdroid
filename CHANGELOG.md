@@ -3,10 +3,17 @@
 ## Unreleased
 
 ### Added
-- Added a Kotlin/JS browser target with a Compose Multiplatform `:webApp` demo host.
+- Added a Kotlin/JS browser target for `:core` and `:domain`, plus a Compose Multiplatform `:webApp` demo host.
 - Added browser caller resolution that maps bundled stack positions back to the original `.kt` file and line through the source map the running script declares, so `withLineReference()` and the default tag provider behave the same as on desktop and iOS.
 - Added a web `ConsoleLogger` that routes each level to the matching browser `console` method.
 - Added `jsTest` coverage for browser stack parsing, Kotlin/JS name normalization, LoKdroid source detection, and Base64 VLQ source map decoding, runnable on Node through a new `nodejs()` test runner as well as in the browser.
+
+### Changed
+- LoKdroid now starts with a working default configuration, so calling `initialize(...)` is optional and logging before it no longer throws.
+- Renamed `MessageBuilder` to `MultipleLineMessageBuilder` and the `initialize(...)` parameter `messageBuilderFactory` to `multipleLineMessageBuilderFactory`. Call sites that name either explicitly need updating.
+- Raised the JVM target of the published `:core` and `:domain` artifacts from Java 1.8 to Java 17, which is now the minimum for consuming projects.
+- Replaced reflection-derived class and file name constants in shared caller resolution with literals, because Kotlin/JS does not provide `qualifiedName`.
+- Improved colour contrast in the shared Compose demo UI.
 
 ## 0.1.2-alpha
 

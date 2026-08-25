@@ -42,6 +42,11 @@ Notes:
 
 ## Getting Started
 
+### Requirements
+
+The published `:core` and `:domain` artifacts are compiled for **Java 17**, so consuming projects need
+a JDK 17 toolchain and a matching `jvmTarget` / `compileOptions` setting.
+
 Add LoKdroid to your project:
 
 ```gradle
