@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.0-alpha
+
 ### Added
 - Added a Kotlin/JS browser target for `:core` and `:domain`, plus a Compose Multiplatform `:webApp` demo host.
 - Added browser caller resolution that maps bundled stack positions back to the original `.kt` file and line through the source map the running script declares, so `withLineReference()` and the default tag provider behave the same as on desktop and iOS.

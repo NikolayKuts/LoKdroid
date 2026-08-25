@@ -58,14 +58,14 @@ repositories {
 **Kotlin DSL**
 ```gradle
 dependencies {
-    implementation("io.github.nikolaykuts:lokdroid:0.1.2-alpha")
+    implementation("io.github.nikolaykuts:lokdroid:0.2.0-alpha")
 }
 ```
 
 **Groovy**
 ```gradle
 dependencies {
-    implementation 'io.github.nikolaykuts:lokdroid:0.1.2-alpha'
+    implementation 'io.github.nikolaykuts:lokdroid:0.2.0-alpha'
 }
 ```
 
